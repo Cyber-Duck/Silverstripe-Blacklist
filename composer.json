@@ -1,24 +1,24 @@
 {
     "name": "cyberduckandy/blacklist",
     "description": "Block access to your silverstripe application based on IP, referer, or host",
-    "license": "MIT",
+    "type": "silverstripe-module",
+    "homepage": "http://github.com/cyberduckandy/blacklist",
     "keywords": ["silverstripe"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Andrew Mc Cormack",
             "email": "andrewm@cyber-duck.co.uk"
         }
     ],
+    "support": {
+        "issues": "http://github.com/cyberduckandy/blacklist/issues"
+    },
     "minimum-stability": "dev",
     "require": {
 
     },
     "require-dev": {
-        
-    },
-    "autoload": {
-        "psr-0": {
-            "cyberduckandy/blacklist": "src/"
-        }
+
     }
 }
