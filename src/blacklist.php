@@ -40,11 +40,16 @@ class blacklist {
 
 	function __construct()
 	{
-		
+
 	}
 
-	public static function init($init = true)
+	public function init($init = true)
 	{
 		return $init;
+	}
+
+	public function run()
+	{
+		return true;
 	}
 }
