@@ -1,12 +1,12 @@
 <?php
 
-use cyberduck\blacklist\core;
+use Andy\Blacklist\Blacklist;
 
-class blacklistTest extends PHPUnit_Framework_TestCase {
+class BlacklistTest extends PHPUnit_Framework_TestCase {
 
 	public function testCore()
 	{
-		$blacklist = new core;
-		$this->assertTrue($blacklist->init());
+		$blacklist = new Blacklist();
+		$this->assertTrue(is_array($blacklist->user()));
 	}
 }

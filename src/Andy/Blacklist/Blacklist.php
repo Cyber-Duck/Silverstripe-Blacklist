@@ -1,4 +1,7 @@
 <?php
+
+namespace Andy\Blacklist;
+
 /* 
  *
  * Copyright (c) 2015, Andrew Mc Cormack <andrewm@cyber-duck.co.uk>.
@@ -34,7 +37,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-class blacklist {
+
+
+class Blacklist {
 	
 	private $banned = false;
 	
