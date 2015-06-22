@@ -34,8 +34,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace cyberduckandy\blacklist;
-
 class blacklist {
 	
 	private $banned = false;
