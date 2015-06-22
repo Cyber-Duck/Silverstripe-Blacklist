@@ -14,10 +14,10 @@
 
     },
     "require-dev": {
-
+        
     },
     "autoload": {
-        "psr-4": {
+        "psr-0": {
             "cyberduckandy/blacklist": "src/"
         }
     }

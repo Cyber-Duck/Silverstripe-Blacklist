@@ -1,5 +1,5 @@
 <?php
-/* PHPUnit
+/* 
  *
  * Copyright (c) 2015, Andrew Mc Cormack <andrewm@cyber-duck.co.uk>.
  * All rights reserved.
