@@ -37,19 +37,125 @@
 namespace cyberduckandy\blacklist;
 
 class blacklist {
-
-	function __construct()
+	
+	private $banned = false;
+	
+	private $ips;
+	
+	private $hosts;
+	
+	private $referers;
+	
+	private $userIP;
+	
+	private $userHost;
+	
+	private $userReferer;
+	
+	function __construct($ips = array(), $hosts = array(), $referers = array())
 	{
-
+		$this->ips = $ips;
+		$this->hosts = $hosts;
+		$this->referers = $referers;
+		
+		$this->getClientDetails();
 	}
-
-	public function init($init = true)
+	
+	public function setIPs($ips = array())
 	{
-		return $init;
+		$this->ips = array_merge($this->ips, $ips);
 	}
-
-	public function run()
+	
+	public function setHosts($hosts = array())
 	{
-		return true;
+		$this->hosts = array_merge($this->hosts, $hosts);
+	}
+	
+	public function setReferers($referers = array())
+	{
+		$this->referers = array_merge($this->referers, $referers);
+	}
+	
+	public function user()
+	{
+		return array(
+			'ip' => $this->userIP,
+			'host' => $this->userHost,
+			'referer' => $this->userReferer
+		);
+	}
+	
+	private function getClientDetails()
+	{
+    	foreach(array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key) :
+        	if (array_key_exists($key, $_SERVER) === true) :
+            	foreach (explode(',', $_SERVER[$key]) as $ip) :
+                	$ip = trim($ip);
+
+                	if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) :
+                    	$this->userIP = $ip;
+						$this->checkIP();
+                	endif;
+            	endforeach;
+        	endif;
+    	endforeach;
+		
+		$this->userHost = gethostbyaddr($this->userIP);
+		if($this->userHost !== false) :
+			$this->checkHost();
+		endif;
+		
+		if(isset($_SERVER['HTTP_REFERER'])) :
+			$this->userReferer = $_SERVER['HTTP_REFERER'];
+			$this->checkReferer();
+		endif;
+		
+		$this->block();
+	}
+	
+	private function checkIP()
+	{
+		foreach($this->ips as $blocked) :
+			if(is_array($blocked)) :
+			
+				$ip  = ip2long($this->userIP);
+				$min = ip2long($blocked[0]);
+				$max = ip2long($blocked[1]);
+				
+				if($ip >= $min && $ip <= $max) :
+					$this->banned = true;
+				endif;
+			else :
+				if($this->userIP == $blocked) :
+					$this->banned = true;
+				endif;
+			endif;
+		endforeach;
+	}
+	
+	private function checkHost()
+	{
+		foreach($this->hosts as $blocked) :
+			if(strpos($this->userHost, $blocked) !== false) :
+				$this->banned = true;
+			endif;
+		endforeach;
+	}
+	
+	private function checkReferer()
+	{
+		foreach($this->referers as $blocked) :
+			if(strpos($this->userReferer, $blocked) !== false) :
+				$this->banned = true;
+			endif;
+		endforeach;
+	}
+	
+	private function block()
+	{
+		if($this->banned === true) :
+			header('HTTP/1.0 403 Forbidden');
+			die;
+		endif;
 	}
 }
