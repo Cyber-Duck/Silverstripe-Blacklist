@@ -22,6 +22,6 @@
         "phpunit/phpunit": "4.7.*"
     },
     "autoload": {
-        "psr-0": { "Andy\\Blacklist\\": ["src/"] }
+        "psr-0": { "CyberduckAndy\\Blacklist\\": ["src/"] }
     }
 }

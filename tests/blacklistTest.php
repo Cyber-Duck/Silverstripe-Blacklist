@@ -1,6 +1,6 @@
 <?php
 
-use Andy\Blacklist\Blacklist;
+use CyberduckAndy\Blacklist\Blacklist;
 
 class BlacklistTest extends PHPUnit_Framework_TestCase {
 
