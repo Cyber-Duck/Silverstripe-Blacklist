@@ -1,0 +1,24 @@
+{
+    "name": "cyberduck/blacklist",
+    "description": "Block access to your silverstripe application based on IP, referer, or host",
+    "license": "MIT",
+    "keywords": ["silverstripe"],
+    "authors": [
+        {
+            "name": "Andrew Mc Cormack",
+            "email": "andrewm@cyber-duck.co.uk"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "cyberduck/blacklist": "src/"
+        }
+    }
+}
