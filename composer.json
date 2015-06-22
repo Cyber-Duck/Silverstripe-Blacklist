@@ -1,5 +1,5 @@
 {
-    "name": "cyberduck/blacklist",
+    "name": "cyberduckandy/blacklist",
     "description": "Block access to your silverstripe application based on IP, referer, or host",
     "license": "MIT",
     "keywords": ["silverstripe"],
@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-0": {
-            "cyberduck/blacklist": "src/"
+            "cyberduckandy/blacklist": "src/"
         }
     }
 }
