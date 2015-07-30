@@ -24,11 +24,11 @@ class TrafficAdmin extends ModelAdmin {
 
 	private static $menu_title = 'Traffic';
 
-	private static $menu_icon = 'framework/admin/images/menu-icons/16x16/blog.png';
+	private static $menu_icon = 'blacklist/images/menu-icons/16x16/traffic.png';
 
 	private static $page_length = 100;
 
-	private static $menu_priority = 99;
+	private static $menu_priority = -99;
 }
 
 class TrafficAdminExtension extends Extension {

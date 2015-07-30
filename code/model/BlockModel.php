@@ -37,9 +37,9 @@ class BlockAdmin extends ModelAdmin {
 
 	private static $menu_title = 'Blocked Users';
 
-	private static $menu_icon = 'framework/admin/images/menu-icons/16x16/blog.png';
+	private static $menu_icon = 'blacklist/images/menu-icons/16x16/block.png';
 
 	private static $page_length = 100;
 
-	private static $menu_priority = 100;
+	private static $menu_priority = -100;
 }
