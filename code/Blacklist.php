@@ -67,7 +67,7 @@ class Blacklist {
 
 	function __construct()
 	{
-		$this->getUserIP()
+		$this->getUserIP();
 		$this->getUserReferer();
 		$this->getUserHost();
 	}
