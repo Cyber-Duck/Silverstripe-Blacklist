@@ -17,7 +17,7 @@ class BlockModel extends DataObject {
 		'referer' => 'Varchar(255)',
 		);
 
-	private static $singular_name = 'Add Blocked';
+	private static $singular_name = 'Blocked';
 
 	public function getCMSFields()
 	{
@@ -38,4 +38,8 @@ class BlockAdmin extends ModelAdmin {
 	private static $menu_title = 'Blocked Users';
 
 	private static $menu_icon = 'framework/admin/images/menu-icons/16x16/blog.png';
+
+	private static $page_length = 100;
+
+	private static $menu_priority = -0.1;
 }
