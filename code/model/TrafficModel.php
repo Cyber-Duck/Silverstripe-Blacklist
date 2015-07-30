@@ -10,9 +10,11 @@
 class TrafficModel extends DataObject {
 
 	private static $db = array(
-		'ip' 	  => 'Varchar(255)',
-		'host' 	  => 'Varchar(255)',
-		'referer' => 'Varchar(255)'
+		'datetime' => 'SS_Datetime',
+		'type' 	   => 'Varchar(255)',
+		'ip' 	   => 'Varchar(255)',
+		'host' 	   => 'Varchar(255)',
+		'referer'  => 'Varchar(255)'
 		);
 }
 
@@ -29,6 +31,10 @@ class TrafficAdmin extends ModelAdmin {
 	private static $page_length = 100;
 
 	private static $menu_priority = -99;
+
+	private static $model_importers = array();
+
+	private static $showImportForm = false;
 }
 
 class TrafficAdminExtension extends Extension {

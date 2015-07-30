@@ -9,9 +9,34 @@
  **/
 class Block {
 
-	function __construct()
-	{
+	private $ip;
 
+	private $host;
+
+	private $referer;
+
+	private $blockedIPs;
+
+	private $blockedHosts;
+
+	private $blockedReferers;
+
+	function __construct($ip, $host, $referer)
+	{
+		$this->ip = $ip;
+		$this->host = $host;
+		$this->referer = $referer;
+
+		$this->getBlockedData();
+
+		$this->checkIP()
+		$this->checkHost()
+		$this->checkReferer();
+	}
+
+	private function getBlockedData()
+	{
+		
 	}
 
 	private function checkIP()
@@ -19,16 +44,16 @@ class Block {
 		foreach($this->ips as $blocked) :
 			if(is_array($blocked)) :
 			
-				$ip  = ip2long($this->userIP);
+				$ip  = ip2long($this->ip);
 				$min = ip2long($blocked[0]);
 				$max = ip2long($blocked[1]);
 				
 				if($ip >= $min && $ip <= $max) :
-					$this->banned = true;
+					$this->forbidden();
 				endif;
 			else :
 				if($this->userIP == $blocked) :
-					$this->banned = true;
+					$this->forbidden();
 				endif;
 			endif;
 		endforeach;
@@ -38,7 +63,7 @@ class Block {
 	{
 		foreach($this->hosts as $blocked) :
 			if(strpos($this->userHost, $blocked) !== false) :
-				$this->banned = true;
+				$this->forbidden();
 			endif;
 		endforeach;
 	}
@@ -47,16 +72,14 @@ class Block {
 	{
 		foreach($this->referers as $blocked) :
 			if(strpos($this->userReferer, $blocked) !== false) :
-				$this->banned = true;
+				$this->forbidden();
 			endif;
 		endforeach;
 	}
 	
-	private function block()
+	private function forbidden()
 	{
-		if($this->banned === true) :
-			header('HTTP/1.0 403 Forbidden');
-			die;
-		endif;
+		header('HTTP/1.0 403 Forbidden');
+		die;
 	}
 }

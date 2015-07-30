@@ -10,11 +10,12 @@
 class BlockModel extends DataObject {
 
 	private static $db = array(
-		'ip' 	  => 'Varchar(255)',
-		'ipMin'	  => 'Varchar(255)',
-		'ipMax'   => 'Varchar(255)',
-		'host' 	  => 'Varchar(255)',
-		'referer' => 'Varchar(255)',
+		'description' => 'Varchar(255)',
+		'ip' 	      => 'Varchar(255)',
+		'ipMin'	      => 'Varchar(255)',
+		'ipMax'       => 'Varchar(255)',
+		'host' 	      => 'Varchar(255)',
+		'referer'     => 'Varchar(255)',
 		);
 
 	private static $singular_name = 'Blocked';
@@ -22,9 +23,12 @@ class BlockModel extends DataObject {
 	public function getCMSFields()
 	{
 		return new FieldList(
-			new TextField('ip'),
+			new TextField('description'),
+			new TextField('ip', 'IP'),
+			new TextField('ipMin', 'Min IP range'),
+			new TextField('ipMax', 'Max IP range'),
 			new TextField('host'),
-			new TextField('referrer')
+			new TextField('referer')
 			);
 	}
 }

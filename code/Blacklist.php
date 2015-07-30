@@ -41,6 +41,8 @@
  **/
 class Blacklist {
 
+	private $saveTraffic = true;
+
 	private $saveBlocked = false;
 
 	private $saveBots = true;
@@ -77,6 +79,11 @@ class Blacklist {
 		return true;
 	}
 
+	public function saveTraffic($save = true)
+	{
+		$this->saveTraffic = $save;
+	}
+
 	public function saveBlocked($save = false)
 	{
 		$this->saveBlocked = $save;
@@ -85,15 +92,6 @@ class Blacklist {
 	public function saveBots($save = true)
 	{
 		$this->saveBots = $save;
-	}
-
-	public function run()
-	{
-		$this->saveTraffic();
-		$this->blockUser();
-
-		$this->checkBlocked();
-		$this->saveTraffic();
 	}
 
 	private function getUserIP()
@@ -126,13 +124,27 @@ class Blacklist {
 		endif;
 	}
 
-	private function checkBlocked()
+	private function run()
 	{
-		$this->block = new Block();
-	}
+		$this->traffic = new Traffic(
+			$this->userIP,
+			$this->userHost,
+			$this->userReferer
+			);
 
-	private function saveTraffic()
-	{
-		$this->traffic = new Traffic();
+		if($this->saveTraffic === true) :
+			$this->traffic->save();
+		endif;
+		/*
+		$this->block = new Block(
+			$this->userIP,
+			$this->userHost,
+			$this->userReferer
+			);
+
+		if($this->saveTraffic === true) :
+			$this->traffic->save();
+		endif;
+		*/
 	}
 }
