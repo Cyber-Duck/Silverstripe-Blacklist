@@ -34,7 +34,7 @@ class TrafficAdmin extends ModelAdmin {
 
 	private static $model_importers = array();
 
-	private static $showImportForm = false;
+	private $showImportForm = false;
 }
 
 class TrafficAdminExtension extends Extension {
