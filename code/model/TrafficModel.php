@@ -28,5 +28,15 @@ class TrafficAdmin extends ModelAdmin {
 
 	private static $page_length = 100;
 
-	private static $menu_priority = -0.1;
+	private static $menu_priority = 99;
+}
+
+class TrafficAdminExtension extends Extension {
+
+	function updateEditForm(&$form)
+	{
+		$c = $form->fields->dataFieldByName('TrafficModel');
+		$config = $c->config;
+		$config->removeComponent($config->getComponentByType('GridFieldAddNewButton'));
+	}
 }

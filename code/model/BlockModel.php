@@ -41,5 +41,5 @@ class BlockAdmin extends ModelAdmin {
 
 	private static $page_length = 100;
 
-	private static $menu_priority = -0.1;
+	private static $menu_priority = 100;
 }
