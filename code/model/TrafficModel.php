@@ -23,7 +23,7 @@ class TrafficModel extends DataObject {
 		'type' 	   => 'User',
 		'ip' 	   => 'IP',
 		'host' 	   => 'Host',
-		'referer'  => 'Referer'
+		'referer'  => 'Referer',
 		'url'      => 'URL'
   	);
 }
