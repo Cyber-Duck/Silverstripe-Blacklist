@@ -14,8 +14,18 @@ class TrafficModel extends DataObject {
 		'type' 	   => 'Varchar(255)',
 		'ip' 	   => 'Varchar(255)',
 		'host' 	   => 'Varchar(255)',
-		'referer'  => 'Varchar(255)'
+		'referer'  => 'Varchar(255)',
+		'url'      => 'Varchar(255)'
 		);
+
+	public static $summary_fields = array(
+		'datetime' => 'Logged',
+		'type' 	   => 'User',
+		'ip' 	   => 'IP',
+		'host' 	   => 'Host',
+		'referer'  => 'Referer'
+		'url'      => 'URL'
+  	);
 }
 
 class TrafficAdmin extends ModelAdmin {
@@ -34,7 +44,7 @@ class TrafficAdmin extends ModelAdmin {
 
 	private static $model_importers = array();
 
-	private $showImportForm = false;
+	public $showImportForm = false;
 }
 
 class TrafficAdminExtension extends Extension {

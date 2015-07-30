@@ -15,19 +15,28 @@ class Traffic {
 
 	private $referer;
 
-	function __construct($ip, $host, $referer)
+	private $saveBots = true;
+
+	function __construct($ip, $host, $referer, $saveBots = true)
 	{
 		$this->ip = $ip;
 		$this->host = $host;
 		$this->referer = $referer;
+		$this->saveBots = $saveBots;
 	}
 
 	public function save() 
 	{
+		$type = $this->getTrafficType();
+
+		if($type == 'bot' && $this->saveBots === false) :
+			return false;
+		endif;
+
 		$traffic = TrafficModel::create();
 
 		$traffic->datetime = SS_Datetime::now();
-		$traffic->type     = $this->getTrafficType();
+		$traffic->type     = $type;
 		$traffic->ip       = $this->ip;
 		$traffic->host     = $this->host;
 		$traffic->referer  = $this->referer;
@@ -37,7 +46,7 @@ class Traffic {
 
 	private function getTrafficType()
 	{
-		$bots = require_once(BLACKLIST_PATH.'clients/bots.php');
+		$bots = require_once(BASE_PATH.'/'.BLACKLIST_PATH.'/clients/bots.php');
 
 		foreach($bots as $bot) :
 			if(strpos($bot, $this->host) !== false) :

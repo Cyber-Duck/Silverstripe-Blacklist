@@ -124,12 +124,13 @@ class Blacklist {
 		endif;
 	}
 
-	private function run()
+	public function run()
 	{
 		$this->traffic = new Traffic(
 			$this->userIP,
 			$this->userHost,
-			$this->userReferer
+			$this->userReferer,
+			$this->saveBots
 			);
 
 		if($this->saveTraffic === true) :
