@@ -185,7 +185,7 @@ class Blacklist {
 	 **/
 	public function run()
 	{
-		// initiate a traffic object for logging
+		// initiate a traffic object for logging and pass in our user information
 		$this->traffic = new Traffic(
 			$this->userIP,
 			$this->userHost,
@@ -193,7 +193,7 @@ class Blacklist {
 			$this->saveBots
 			);
 
-		// save the traffic inforamtion if we need to
+		// save the traffic information if we need to
 		if($this->saveTraffic === true) :
 			$this->traffic->save();
 		endif;
