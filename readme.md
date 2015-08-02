@@ -1,5 +1,5 @@
-# blacklist
-A SilverStripe module for logging an blocking users.
+# Blacklist
+A SilverStripe module for logging and blocking users.
 
 Logs the user type, IP address, host, and referer as well as the URL requested and logged time.
 
