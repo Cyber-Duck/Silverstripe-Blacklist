@@ -41,39 +41,39 @@
  **/
 class Blacklist {
 
-	/*
+	/**
 	 * @var boolean $saveTraffic Set whether to log traffic to database
-	 */
+	 **/
 	private $saveTraffic = true;
 
-	/*
+	/**
 	 * @var boolean $saveBlocked Set whether to log blocked traffic to database
-	 */
+	 **/
 	private $saveBlocked = false;
 
-	/*
+	/**
 	 * @var boolean $saveBots Set whether to log bot traffic to database
-	 */
+	 **/
 	private $saveBots = true;
 
-	/*
+	/**
 	 * @var string $userIP The current user IP
-	 */
+	 **/
 	private $userIP;
 
-	/*
+	/**
 	 * @var string $userIP The current user referer
-	 */
+	 **/
 	private $userReferer;
 
-	/*
+	/**
 	 * @var string $userIP The current user hostname
-	 */
+	 **/
 	private $userHost;
 
-	/*
+	/**
 	 * @var array $serverIPs $_SERVER variables we can check to get the user IP
-	 */
+	 **/
 	private $serverIPs = array(
 		'HTTP_CLIENT_IP',
 		'HTTP_X_FORWARDED_FOR',
@@ -84,10 +84,10 @@ class Blacklist {
 		'REMOTE_ADDR'
 		);
 
-	/*
+	/**
 	 * Our constructor tries to attain our user IP, referer, and host 
 	 * @return void
-	 */
+	 **/
 	function __construct()
 	{
 		$this->getUserIP();
@@ -95,49 +95,49 @@ class Blacklist {
 		$this->getUserHost();
 	}
 	
-	/*
+	/**
 	 * A test method to verify our plugin installation
 	 * @return boolean true
-	 */
+	 **/
 	public function test()
 	{
 		return true;
 	}
 	
-	/*
+	/**
 	 * Set whether to log traffic to the database
 	 * @param boolean $save set true or false
 	 * @return void
-	 */
+	 **/
 	public function saveTraffic($save = true)
 	{
 		$this->saveTraffic = $save;
 	}
 	
-	/*
+	/**
 	 * Set whether to log  blocked traffic to the database
 	 * @param boolean $save set true or false
 	 * @return void
-	 */
+	 **/
 	public function saveBlocked($save = false)
 	{
 		$this->saveBlocked = $save;
 	}
 	
-	/*
+	/**
 	 * Set whether to log bot traffic to the database
 	 * @param boolean $save set true or false
 	 * @return void
-	 */
+	 **/
 	public function saveBots($save = true)
 	{
 		$this->saveBots = $save;
 	}
 	
-	/*
+	/**
 	 * Check the available $_SERVER variables to get the user IP address
 	 * @return void
-	 */
+	 **/
 	private function getUserIP()
 	{
 		foreach($this->serverIPs as $key) :
@@ -157,10 +157,10 @@ class Blacklist {
 		endforeach;
 	}
 	
-	/*
+	/**
 	 * Get the user referer if the $_SERVER['HTTP_REFERER'] variable is set
 	 * @return void
-	 */
+	 **/
 	private function getUserReferer()
 	{
 		if(isset($_SERVER['HTTP_REFERER'])) :
@@ -168,10 +168,10 @@ class Blacklist {
 		endif;
 	}
 	
-	/*
+	/**
 	 * Get the user host information
 	 * @return void
-	 */
+	 **/
 	private function getUserHost()
 	{
 		if(isset($this->userIP)) :
@@ -179,10 +179,10 @@ class Blacklist {
 		endif;
 	}
 	
-	/*
+	/**
 	 * Run the blacklist core and log traffic or block the user if necessary
 	 * @return void
-	 */
+	 **/
 	public function run()
 	{
 		// initiate a traffic object for logging
