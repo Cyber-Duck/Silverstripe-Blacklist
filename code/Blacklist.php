@@ -96,7 +96,7 @@ class Blacklist {
 	}
 	
 	/**
-	 * A test method to verify our plugin installation
+	 * A test method to verify our module installation
 	 * @return boolean true
 	 **/
 	public function test()
