@@ -1,13 +1,17 @@
 <?php
 
 /**
- * TrafficModel
+ * LoggerModel
+ * This sets up our database fields to store inforation about our app traffic
+ * Just like other data objects; the information in accessable in our admin CMS
+ * Unlike most data objects, data is not inserted into this database table through
+ * the admin sytem and instead everything is inserted through our blacklist core
  *
  * @package silverstripe-blacklist
  * @license BSD License http://www.silverstripe.org/bsd-license
  * @author <andrewm@cyber-duck.co.uk>
  **/
-class TrafficModel extends DataObject {
+class LoggerModel extends DataObject {
 
 	/**
 	 * @static array $db the traffic database fields
@@ -37,9 +41,9 @@ class TrafficModel extends DataObject {
 class TrafficAdmin extends ModelAdmin {
 
 	/**
-	 * @static array $managed_models this class manages our TrafficModel
+	 * @static array $managed_models this class manages our LoggerModel
 	 **/
-	private static $managed_models = array('TrafficModel');
+	private static $managed_models = array('LoggerModel');
 
 	/**
 	 * @static string $url_segment the CMS URL segment
@@ -75,7 +79,7 @@ class TrafficAdminExtension extends Extension {
 
 	function updateEditForm(&$form)
 	{
-		$c = $form->fields->dataFieldByName('TrafficModel');
+		$c = $form->fields->dataFieldByName('LoggerModel');
 		$config = $c->config;
 		$config->removeComponent($config->getComponentByType('GridFieldAddNewButton'));
 	}

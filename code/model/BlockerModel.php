@@ -1,13 +1,24 @@
 <?php
 
 /**
- * BlockModel
+ * BlockerModel
+ * This class sets up our database fields and object so we can easily add troublesome
+ * IP addresses, host, and referers through our admin CMS. One of the big features of
+ * this module is the ability to exclude a range of IP addresses. Having this 
+ * functionality can save a huge amount of time and effort entering IP addresses
+ * in the same range manually. You can exclude entire countries from your site if
+ * need be. When we check a particular record we got through the process of checking
+ * the IP first, then IP range, then host, then referer. If there is a match to anything 
+ * blocked we instantly return a 503 forbidden header along with a blank page. The module
+ * is targeted toward stopping spam bots crawling your website content and inflating page
+ * impressions in things like Google Analytics. This module isn't meant to be a full substitute
+ * for .htaccess blocking as troublesome users will actually make it into your app. 
  *
  * @package silverstripe-blacklist
  * @license BSD License http://www.silverstripe.org/bsd-license
  * @author <andrewm@cyber-duck.co.uk>
  **/
-class BlockModel extends DataObject {
+class BlockerModel extends DataObject {
 
 	/**
 	 * @static array $db databse columns which contain blocked traffic
@@ -53,9 +64,9 @@ class BlockModel extends DataObject {
 class BlockAdmin extends ModelAdmin {
 
 	/**
-	 * @static array $managed_models this class manages our BlockModel
+	 * @static array $managed_models this class manages our BlockerModel
 	 **/
-	private static $managed_models = array('BlockModel');
+	private static $managed_models = array('BlockerModel');
 
 	/**
 	 * @static string $url_segment the CMS URL segment

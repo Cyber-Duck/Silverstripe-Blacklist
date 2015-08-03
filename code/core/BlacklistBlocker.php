@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Block
+ * BlacklistBlocker
  *
  * @package silverstripe-blacklist
  * @license BSD License http://www.silverstripe.org/bsd-license
  * @author <andrewm@cyber-duck.co.uk>
  **/
-class Block {
+class BlacklistBlocker {
 
 	/**
 	 * @var string $ip the current user IP address
@@ -47,7 +47,7 @@ class Block {
 	 **/
 	private function getBlockedData()
 	{
-		$blocked = BlockModel::get();
+		$blocked = BlockerModel::get();
 
 		foreach($blocked as $data) :
 			$this->checkIP(

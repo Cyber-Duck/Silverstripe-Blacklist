@@ -169,7 +169,7 @@ class Blacklist {
 	public function run()
 	{
 		// initiate a traffic object for logging and pass in our user info
-		$this->traffic = new Traffic(
+		$this->traffic = new BlacklistLogger(
 			$this->userIP,
 			$this->userHost,
 			$this->userReferer,
@@ -182,7 +182,7 @@ class Blacklist {
 		endif;
 
 		// check for a blocked user
-		$this->block = new Block(
+		$this->block = new BlacklistBlocker(
 			$this->userIP,
 			$this->userHost,
 			$this->userReferer

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Traffic
+ * BlacklistLogger
  *
  * @package silverstripe-blacklist
  * @license BSD License http://www.silverstripe.org/bsd-license
  * @author <andrewm@cyber-duck.co.uk>
  **/
-class Traffic {
+class BlacklistLogger {
 
 	/**
 	 * @var string $ip the current user IP address
@@ -68,7 +68,7 @@ class Traffic {
 		endif;
 
 		// save our user information to the database
-		$traffic = TrafficModel::create();
+		$traffic = LoggerModel::create();
 
 		$traffic->datetime = SS_Datetime::now();
 		$traffic->type     = $type;
