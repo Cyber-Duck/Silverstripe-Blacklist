@@ -2,9 +2,9 @@
 /**
  * Blacklist
  * The core of the Blacklist module here does very little related to the logic 
- * of the module. Instead its responsible for setting and getting dependencies. 
- * Through this approach we allow the easy extension of the module itself and 
- * leave it open for easy integration of new features in future.
+ * of the module. Instead it is responsible for setting dependencies in our
+ * module. Through this approach we allow the easy extension of the module 
+ * itself and leave it open for easy integration of new features in future.
  *
  * @package silverstripe-blacklist
  * @license BSD License http://www.silverstripe.org/bsd-license
@@ -38,7 +38,7 @@ class Blacklist {
 	private $userReferer;
 
 	/**
-	 * @var string $userIP The current user hostname
+	 * @var string $userIP The current user host
 	 **/
 	private $userHost;
 
@@ -56,7 +56,8 @@ class Blacklist {
 		);
 
 	/**
-	 * Our constructor tries to attain our user IP, referer, and host 
+	 * Our constructor tries to attain our user IP, referer, and host
+	 *
 	 * @return void
 	 **/
 	function __construct()
@@ -68,6 +69,7 @@ class Blacklist {
 	
 	/**
 	 * A test method to verify our module installation
+	 *
 	 * @return boolean true
 	 **/
 	public function test()
@@ -77,7 +79,9 @@ class Blacklist {
 	
 	/**
 	 * Set whether to log traffic to the database
+	 *
 	 * @param boolean $save set true or false
+	 *
 	 * @return void
 	 **/
 	public function saveTraffic($save = true)
@@ -87,7 +91,9 @@ class Blacklist {
 	
 	/**
 	 * Set whether to log  blocked traffic to the database
+	 *
 	 * @param boolean $save set true or false
+	 *
 	 * @return void
 	 **/
 	public function saveBlocked($save = false)
@@ -97,7 +103,9 @@ class Blacklist {
 	
 	/**
 	 * Set whether to log bot traffic to the database
+	 *
 	 * @param boolean $save set true or false
+	 *
 	 * @return void
 	 **/
 	public function saveBots($save = true)
@@ -107,6 +115,7 @@ class Blacklist {
 	
 	/**
 	 * Check the available $_SERVER variables to get the user IP address
+	 *
 	 * @return void
 	 **/
 	private function getUserIP()
@@ -117,7 +126,8 @@ class Blacklist {
 					$ip = trim($ip);
 
 					// validate we have have a proper IP address
-					if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE 
+					if(filter_var($ip, FILTER_VALIDATE_IP
+						, FILTER_FLAG_NO_PRIV_RANGE 
 						| FILTER_FLAG_NO_RES_RANGE) !== false) :
 
 						// if we have a proper IP address we assign it
@@ -130,6 +140,7 @@ class Blacklist {
 	
 	/**
 	 * Get the user referer if the $_SERVER['HTTP_REFERER'] variable is set
+	 *
 	 * @return void
 	 **/
 	private function getUserReferer()
@@ -152,6 +163,7 @@ class Blacklist {
 	
 	/**
 	 * Run the blacklist core and log traffic or block the user if necessary
+	 *
 	 * @return void
 	 **/
 	public function run()
@@ -168,16 +180,12 @@ class Blacklist {
 		if($this->saveTraffic === true) :
 			$this->traffic->save();
 		endif;
-		/*
+
+		// check for a blocked user
 		$this->block = new Block(
 			$this->userIP,
 			$this->userHost,
 			$this->userReferer
 			);
-
-		if($this->saveTraffic === true) :
-			$this->traffic->save();
-		endif;
-		*/
 	}
 }
