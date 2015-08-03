@@ -49,39 +49,47 @@ class Block {
 	{
 		$blocked = BlockModel::get();
 
-		$this->checkIP()
-		$this->checkHost()
-		$this->checkReferer();
+		foreach($blocked as $data) :
+			$this->checkIP(
+				$data->ip,
+				$data->ipMin,
+				$data->ipMax
+				);
+
+			$this->checkHost($data->host);
+
+			$this->checkReferer($data->referer);
+		endforeach;
 	}
 
-	private function checkIP()
+	private function checkIP($ip, $ipMin, $ipMax)
 	{
-		if(is_array($blocked)) :
+		if($ipMin != '' && $ipMax != '') :
 		
 			$ip  = ip2long($this->userIP);
-			$min = ip2long($blocked[0]);
-			$max = ip2long($blocked[1]);
+			$min = ip2long($ipMin);
+			$max = ip2long($ipMax);
 			
 			if($ip >= $min && $ip <= $max) :
 				$this->forbidden();
 			endif;
 		else :
-			if($this->userIP == $blocked) :
+			if($this->userIP == $ip) :
 				$this->forbidden();
 			endif;
 		endif;
 	}
 	
-	private function checkHost()
+	private function checkHost($host)
 	{
-		if(strpos($this->userHost, $blocked) !== false) :
+		if(strpos($this->userHost, $host) !== false) :
 			$this->forbidden();
 		endif;
 	}
 	
-	private function checkReferer()
+	private function checkReferer($referer)
 	{
-		if(strpos($this->userReferer, $blocked) !== false) :
+		if(strpos($this->userReferer, $referer) !== false) :
 			$this->forbidden();
 		endif;
 	}
