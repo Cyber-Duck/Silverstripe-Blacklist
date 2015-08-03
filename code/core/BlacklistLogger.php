@@ -1,73 +1,74 @@
 <?php
-
 /**
  * BlacklistLogger
+ * Logs data about our user to the database including IP address, host, referer,
+ * logged time, and page URL.
  *
  * @package silverstripe-blacklist
  * @license BSD License http://www.silverstripe.org/bsd-license
- * @author <andrewm@cyber-duck.co.uk>
+ * @author  <andrewm@cyber-duck.co.uk>
  **/
 class BlacklistLogger {
 
 	/**
-	 * @var string $ip the current user IP address
+	 * @var string $userIP The current user IP
 	 **/
 	private $userIP;
 
 	/**
-	 * @var string $host the current user host
+	 * @var string $userHost The current user host
 	 **/
 	private $userHost;
 
 	/**
-	 * @var string $referer the current user referer
+	 * @var string $userReferer The current user referer
 	 **/
 	private $userReferer;
 
 	/**
-	 * @var boolean $saveBots Set whether to log bot traffic to database
+	 * @var boolean $logBots Set whether to log bots to database
 	 **/
-	private $saveBots = true;
+	private $logBots = true;
 
 	/**
-	 * Our constructor is paased the user information and assigns it to class properties
+	 * Our constructor assigns user information to class properties
 	 *
-	 * @param  string $ip       the current user IP
-	 * @param  string $host     the current user host
-	 * @param  string $referer  the current user referer
-	 * @param boolean $saveBots save bot traffic or not
+	 * @param string  $ip      The current user IP
+	 * @param string  $host    The current user host
+	 * @param string  $referer The current user referer
+	 * @param boolean $logBots Set whether to log bot traffic
 	 * 
 	 * @return void
 	 **/
-	function __construct($ip, $host, $referer, $saveBots = true)
+	function __construct($ip, $host, $referer, $logBots = true)
 	{
 		$this->userIP = $ip;
 		$this->userHost = $host;
 		$this->userReferer = $referer;
-		$this->saveBots = $saveBots;
+		$this->logBots = $logBots;
 	}
 
 	/**
-	 * The method to save traffic to our database
+	 * Save logged traffic data to our database
 	 *
 	 * @return void
 	 **/
 	public function save() 
 	{
-		// dont save logged in user traffic
+		// Don't save logged in user traffic
 		if(Member::currentUserID() != 0) :
 			return false;
 		endif;
 		
-		// check if our user is human or a bot
+		// Check if our user is human or a bot
 		$type = $this->getTrafficType();
 
-		// if our user is a bot and saving bot traffic is disabled we bail
-		if($type == 'bot' && $this->saveBots === false) :
+		// If our user is a bot and saving bot traffic is disabled we bail
+		if($type == 'bot' && $this->logBots === false) :
 			return false;
 		endif;
 
-		// save our user information to the database
+		// Save our user information to the database
 		$traffic = LoggerModel::create();
 
 		$traffic->datetime = SS_Datetime::now();
@@ -83,14 +84,14 @@ class BlacklistLogger {
 	 * Checks the user host against a list of known bots and returns a string
 	 * containing the user type for insertion into the database
 	 *
-	 * @return string our user type
+	 * @return string
 	 **/
 	private function getTrafficType()
 	{
-		// require the list of bot hosts
+		// Require the list of crawler hosts
 		$bots = require_once(BASE_PATH.'/'.BLACKLIST_PATH.'/clients/bots.php');
 
-		// loop and check
+		// Loop and check
 		foreach($bots as $bot) :
 			if(strpos($bot, $this->userHost) !== false) :
 				return 'bot';

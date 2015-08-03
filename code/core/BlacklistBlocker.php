@@ -1,35 +1,37 @@
 <?php
-
 /**
  * BlacklistBlocker
+ * This class controls our blocking functionality. We check all stored blocked
+ * IP, host, and referer information against our current user and block them
+ * if necessary.
  *
  * @package silverstripe-blacklist
  * @license BSD License http://www.silverstripe.org/bsd-license
- * @author <andrewm@cyber-duck.co.uk>
+ * @author  <andrewm@cyber-duck.co.uk>
  **/
 class BlacklistBlocker {
 
 	/**
-	 * @var string $ip the current user IP address
+	 * @var string $userIP The current user IP
 	 **/
 	private $userIP;
 
 	/**
-	 * @var string $referer the current user referer
-	 **/
-	private $userReferer;
-
-	/**
-	 * @var string $host the current user host
+	 * @var string $userHost The current user host
 	 **/
 	private $userHost;
 
 	/**
-	 * Our constructor is paased the user information and assigns it to class properties
+	 * @var string $userReferer The current user referer
+	 **/
+	private $userReferer;
+
+	/**
+	 * Our constructor assigns user information to class properties
 	 *
-	 * @param  string $ip       the current user IP
-	 * @param  string $host     the current user host
-	 * @param  string $referer  the current user referer
+	 * @param string $ip      The current user IP
+	 * @param string $host    The current user host
+	 * @param string $referer The current user referer
 	 * 
 	 * @return void
 	 **/
@@ -43,12 +45,15 @@ class BlacklistBlocker {
 	}
 
 	/**
+	 * Retrieve blocked user data from our database
+	 *
 	 * @return void
 	 **/
 	private function getBlockedData()
 	{
 		$blocked = BlockerModel::get();
 
+		// lopped through our blocked data
 		foreach($blocked as $data) :
 			$this->checkIP(
 				$data->ip,
@@ -62,6 +67,15 @@ class BlacklistBlocker {
 		endforeach;
 	}
 
+	/**
+	 * Check our injected blocked IP address and IP range
+	 *
+	 * @param string $ip    A blocked IP address
+	 * @param string $ipMin A blocked IP address range start
+	 * @param string $ipMax A blocked IP address range end
+	 *
+	 * @return void
+	 **/
 	private function checkIP($ip, $ipMin, $ipMax)
 	{
 		// check IP address
@@ -84,6 +98,13 @@ class BlacklistBlocker {
 		endif;
 	}
 	
+	/**
+	 * Check the injected host value and block the user if necessary
+	 *
+	 * @param string $host The blocked host value to check
+	 *
+	 * @return void
+	 **/
 	private function checkHost($host)
 	{
 		if(strpos($this->userHost, $host) !== false) :
@@ -91,6 +112,13 @@ class BlacklistBlocker {
 		endif;
 	}
 	
+	/**
+	 * Check the injected referer value and block the user if necessary
+	 *
+	 * @param string $referer The blocked referer value to check
+	 *
+	 * @return void
+	 **/
 	private function checkReferer($referer)
 	{
 		if(strpos($this->userReferer, $referer) !== false) :
@@ -98,6 +126,11 @@ class BlacklistBlocker {
 		endif;
 	}
 	
+	/**
+	 * Returns a 403 forbidden header and kills our application
+	 *
+	 * @return die
+	 **/
 	private function forbidden()
 	{
 		header('HTTP/1.0 403 Forbidden');

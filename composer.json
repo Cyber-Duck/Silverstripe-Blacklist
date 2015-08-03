@@ -1,6 +1,6 @@
 {
     "name": "cyberduckandy/blacklist",
-    "description": "Block and track access to your silverstripe application based on IP, referer, or host",
+    "description": "Block users and log access to your silverstripe application based on IP, referer, or host",
     "type": "silverstripe-module",
     "homepage": "http://github.com/cyberduckandy/blacklist",
     "keywords": ["silverstripe","traffic","blocking"],

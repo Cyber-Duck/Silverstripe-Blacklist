@@ -1,20 +1,19 @@
 <?php
-
 /**
  * LoggerModel
- * This sets up our database fields to store inforation about our app traffic
- * Just like other data objects; the information in accessable in our admin CMS
- * Unlike most data objects, data is not inserted into this database table through
- * the admin sytem and instead everything is inserted through our blacklist core
+ * This sets up our database fields to store information about our logged traffic
+ * Just like other data objects; the information in accessable in our admin CMS.
+ * Data is not inserted into this database table through the admin system CMS
+ * but instead is inserted through our BlacklistLogger class.
  *
  * @package silverstripe-blacklist
  * @license BSD License http://www.silverstripe.org/bsd-license
- * @author <andrewm@cyber-duck.co.uk>
+ * @author  <andrewm@cyber-duck.co.uk>
  **/
 class LoggerModel extends DataObject {
 
 	/**
-	 * @static array $db the traffic database fields
+	 * @static array $db The traffic database fields
 	 **/
 	private static $db = array(
 		'datetime' => 'SS_Datetime',
@@ -26,7 +25,7 @@ class LoggerModel extends DataObject {
 		);
 
 	/**
-	 * @static array $summary_fields the fields to show in our admin CMS grid
+	 * @static array $summary_fields The fields to show in our admin CMS grid
 	 **/
 	public static $summary_fields = array(
 		'datetime' => 'Logged',
@@ -41,7 +40,7 @@ class LoggerModel extends DataObject {
 class TrafficAdmin extends ModelAdmin {
 
 	/**
-	 * @static array $managed_models this class manages our LoggerModel
+	 * @static array $managed_models This class manages our LoggerModel
 	 **/
 	private static $managed_models = array('LoggerModel');
 
@@ -51,36 +50,32 @@ class TrafficAdmin extends ModelAdmin {
 	private static $url_segment = 'traffic';
 
 	/**
-	 * @static string $menu_title the CMS menu link text
+	 * @static string $menu_title The CMS menu link text
 	 **/
 	private static $menu_title = 'Traffic';
 
 	/**
-	 * @static string $menu_icon the CMS menu icon
+	 * @static string $menu_icon The CMS menu icon
 	 **/
 	private static $menu_icon = 'blacklist/images/menu-icons/16x16/traffic.png';
 
 	/**
-	 * @static string $page_length the number of records to show per page in the CMS
+	 * @static string $page_length the number of records to show in the CMS grid
 	 **/
 	private static $page_length = 100;
 
 	/**
-	 * @static string $menu_priority we set this very high so this will be the last CMS menu item
+	 * @static string $menu_priority Set high so this will be last CMS menu item
 	 **/
 	private static $menu_priority = -99;
 
+	/**
+	 * @static array $model_importers Model importing arrays
+	 **/
 	private static $model_importers = array();
 
+	/**
+	 * @static boolean $showImportForm Show import form
+	 **/
 	public $showImportForm = false;
-}
-
-class TrafficAdminExtension extends Extension {
-
-	function updateEditForm(&$form)
-	{
-		$c = $form->fields->dataFieldByName('LoggerModel');
-		$config = $c->config;
-		$config->removeComponent($config->getComponentByType('GridFieldAddNewButton'));
-	}
 }

@@ -1,31 +1,29 @@
 <?php
 /**
  * Blacklist
- * The core of the Blacklist module here does very little related to the logic 
- * of the module. Instead it is responsible for setting dependencies in our
- * module. Through this approach we allow the easy extension of the module 
- * itself and leave it open for easy integration of new features in future.
+ * The core of the Blacklist module is responsible for setting dependencies and 
+ * settings and initialising the module functionality.
  *
  * @package silverstripe-blacklist
  * @license BSD License http://www.silverstripe.org/bsd-license
- * @author <andrewm@cyber-duck.co.uk>
+ * @author  <andrewm@cyber-duck.co.uk>
  **/
 class Blacklist {
 
 	/**
-	 * @var boolean $saveTraffic Set whether to log traffic to database
+	 * @var boolean $logTraffic Set whether to log traffic to database
 	 **/
-	private $saveTraffic = true;
+	private $logTraffic = true;
 
 	/**
-	 * @var boolean $saveBlocked Set whether to log blocked traffic to database
+	 * @var boolean $logBlocked Set whether to log blocked users to database
 	 **/
-	private $saveBlocked = false;
+	private $logBlocked = false;
 
 	/**
-	 * @var boolean $saveBots Set whether to log bot traffic to database
+	 * @var boolean $logBots Set whether to log bots to database
 	 **/
-	private $saveBots = true;
+	private $logBots = true;
 
 	/**
 	 * @var string $userIP The current user IP
@@ -33,38 +31,25 @@ class Blacklist {
 	private $userIP;
 
 	/**
-	 * @var string $userIP The current user referer
-	 **/
-	private $userReferer;
-
-	/**
-	 * @var string $userIP The current user host
+	 * @var string $userHost The current user host
 	 **/
 	private $userHost;
 
 	/**
-	 * @var array $serverIPs $_SERVER variables we can check to get the user IP
+	 * @var string $userReferer The current user referer
 	 **/
-	private $serverIPs = array(
-		'HTTP_CLIENT_IP',
-		'HTTP_X_FORWARDED_FOR',
-		'HTTP_X_FORWARDED',
-		'HTTP_X_CLUSTER_CLIENT_IP',
-		'HTTP_FORWARDED_FOR',
-		'HTTP_FORWARDED',
-		'REMOTE_ADDR'
-		);
+	private $userReferer;
 
 	/**
-	 * Our constructor tries to attain our user IP, referer, and host
+	 * Our constructor tries to attain our user IP, referer, and host info
 	 *
 	 * @return void
 	 **/
 	function __construct()
 	{
 		$this->getUserIP();
-		$this->getUserReferer();
 		$this->getUserHost();
+		$this->getUserReferer();
 	}
 	
 	/**
@@ -80,37 +65,37 @@ class Blacklist {
 	/**
 	 * Set whether to log traffic to the database
 	 *
-	 * @param boolean $save set true or false
+	 * @param boolean $save Set to true or false
 	 *
 	 * @return void
 	 **/
-	public function saveTraffic($save = true)
+	public function logTraffic($save = true)
 	{
-		$this->saveTraffic = $save;
+		$this->logTraffic = $save;
 	}
 	
 	/**
-	 * Set whether to log  blocked traffic to the database
+	 * Set whether to log blocked user traffic to database
 	 *
-	 * @param boolean $save set true or false
+	 * @param boolean $save Set to true or false
 	 *
 	 * @return void
 	 **/
-	public function saveBlocked($save = false)
+	public function logBlocked($save = false)
 	{
-		$this->saveBlocked = $save;
+		$this->logBlocked = $save;
 	}
 	
 	/**
-	 * Set whether to log bot traffic to the database
+	 * Set whether to log bot user traffic to database
 	 *
-	 * @param boolean $save set true or false
+	 * @param boolean $save Set to true or false
 	 *
 	 * @return void
 	 **/
-	public function saveBots($save = true)
+	public function logBots($save = true)
 	{
-		$this->saveBots = $save;
+		$this->logBots = $save;
 	}
 	
 	/**
@@ -120,22 +105,45 @@ class Blacklist {
 	 **/
 	private function getUserIP()
 	{
-		foreach($this->serverIPs as $key) :
+		// $_SERVER variables
+		$serverIPs = array(
+			'HTTP_CLIENT_IP',
+			'HTTP_X_FORWARDED_FOR',
+			'HTTP_X_FORWARDED',
+			'HTTP_X_CLUSTER_CLIENT_IP',
+			'HTTP_FORWARDED_FOR',
+			'HTTP_FORWARDED',
+			'REMOTE_ADDR'
+		);
+
+		foreach($serverIPs as $key) :
 			if(array_key_exists($key, $_SERVER) === true) :
 				foreach (explode(',', $_SERVER[$key]) as $ip) :
 					$ip = trim($ip);
 
-					// validate we have have a proper IP address
-					if(filter_var($ip, FILTER_VALIDATE_IP
+					// Validate user IP address
+					if(filter_var($ip
+						, FILTER_VALIDATE_IP
 						, FILTER_FLAG_NO_PRIV_RANGE 
 						| FILTER_FLAG_NO_RES_RANGE) !== false) :
 
-						// if we have a proper IP address we assign it
 						$this->userIP = $ip;
 					endif;
 				endforeach;
 			endif;
 		endforeach;
+	}
+	
+	/**
+	 * Get the user host information by IP address
+	 *
+	 * @return void
+	 **/
+	private function getUserHost()
+	{
+		if(isset($this->userIP)) :
+			$this->userHost = gethostbyaddr($this->userIP);
+		endif;
 	}
 	
 	/**
@@ -151,41 +159,30 @@ class Blacklist {
 	}
 	
 	/**
-	 * Get the user host information
-	 * @return void
-	 **/
-	private function getUserHost()
-	{
-		if(isset($this->userIP)) :
-			$this->userHost = gethostbyaddr($this->userIP);
-		endif;
-	}
-	
-	/**
 	 * Run the blacklist core and log traffic or block the user if necessary
 	 *
 	 * @return void
 	 **/
 	public function run()
 	{
-		// initiate a traffic object for logging and pass in our user info
-		$this->traffic = new BlacklistLogger(
+		// Initiate a logging object and pass in our user info
+		$logger = new BlacklistLogger(
 			$this->userIP,
 			$this->userHost,
 			$this->userReferer,
-			$this->saveBots
-			);
+			$this->logBots
+		);
 
-		// save the traffic information if we need to
-		if($this->saveTraffic === true) :
-			$this->traffic->save();
+		// Log the traffic information if required
+		if($this->logTraffic === true) :
+			$logger->save();
 		endif;
 
-		// check for a blocked user
-		$this->block = new BlacklistBlocker(
+		// Block the user if required
+		$blocker = new BlacklistBlocker(
 			$this->userIP,
 			$this->userHost,
 			$this->userReferer
-			);
+		);
 	}
 }
