@@ -64,6 +64,14 @@ class Block {
 
 	private function checkIP($ip, $ipMin, $ipMax)
 	{
+		// check IP address
+		if($ip != '') :
+			if($this->userIP == $ip) :
+				$this->forbidden();
+			endif;
+		endif;
+
+		// check IP range
 		if($ipMin != '' && $ipMax != '') :
 		
 			$ip  = ip2long($this->userIP);
@@ -71,10 +79,6 @@ class Block {
 			$max = ip2long($ipMax);
 			
 			if($ip >= $min && $ip <= $max) :
-				$this->forbidden();
-			endif;
-		else :
-			if($this->userIP == $ip) :
 				$this->forbidden();
 			endif;
 		endif;
