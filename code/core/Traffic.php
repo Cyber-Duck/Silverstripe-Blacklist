@@ -52,6 +52,11 @@ class Traffic {
 	 **/
 	public function save() 
 	{
+		// dont save logged in user traffic
+		if(Member::currentUserID() != 0) :
+			return false;
+		endif;
+		
 		// check if our user is human or a bot
 		$type = $this->getTrafficType();
 
