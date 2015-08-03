@@ -9,72 +9,81 @@
  **/
 class Block {
 
-	private $ip;
+	/**
+	 * @var string $ip the current user IP address
+	 **/
+	private $userIP;
 
-	private $host;
+	/**
+	 * @var string $referer the current user referer
+	 **/
+	private $userReferer;
 
-	private $referer;
+	/**
+	 * @var string $host the current user host
+	 **/
+	private $userHost;
 
-	private $blockedIPs;
-
-	private $blockedHosts;
-
-	private $blockedReferers;
-
+	/**
+	 * Our constructor is paased the user information and assigns it to class properties
+	 *
+	 * @param  string $ip       the current user IP
+	 * @param  string $host     the current user host
+	 * @param  string $referer  the current user referer
+	 * 
+	 * @return void
+	 **/
 	function __construct($ip, $host, $referer)
 	{
-		$this->ip = $ip;
-		$this->host = $host;
-		$this->referer = $referer;
+		$this->userIP = $ip;
+		$this->userHost = $host;
+		$this->userReferer = $referer;
 
 		$this->getBlockedData();
+	}
+
+	/**
+	 * @return void
+	 **/
+	private function getBlockedData()
+	{
+		$blocked = BlockModel::get();
 
 		$this->checkIP()
 		$this->checkHost()
 		$this->checkReferer();
 	}
 
-	private function getBlockedData()
-	{
-		
-	}
-
 	private function checkIP()
 	{
-		foreach($this->ips as $blocked) :
-			if(is_array($blocked)) :
+		if(is_array($blocked)) :
+		
+			$ip  = ip2long($this->userIP);
+			$min = ip2long($blocked[0]);
+			$max = ip2long($blocked[1]);
 			
-				$ip  = ip2long($this->ip);
-				$min = ip2long($blocked[0]);
-				$max = ip2long($blocked[1]);
-				
-				if($ip >= $min && $ip <= $max) :
-					$this->forbidden();
-				endif;
-			else :
-				if($this->userIP == $blocked) :
-					$this->forbidden();
-				endif;
+			if($ip >= $min && $ip <= $max) :
+				$this->forbidden();
 			endif;
-		endforeach;
+		else :
+			if($this->userIP == $blocked) :
+				$this->forbidden();
+			endif;
+		endif;
 	}
 	
 	private function checkHost()
 	{
-		foreach($this->hosts as $blocked) :
-			if(strpos($this->userHost, $blocked) !== false) :
-				$this->forbidden();
-			endif;
-		endforeach;
+		if(strpos($this->userHost, $blocked) !== false) :
+			$this->forbidden();
+		endif;
 	}
 	
 	private function checkReferer()
 	{
-		foreach($this->referers as $blocked) :
-			if(strpos($this->userReferer, $blocked) !== false) :
-				$this->forbidden();
-			endif;
-		endforeach;
+		if(strpos($this->userReferer, $blocked) !== false) :
+			$this->forbidden();
+		endif;
 	}
 	
 	private function forbidden()
