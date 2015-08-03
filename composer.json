@@ -1,9 +1,9 @@
 {
-    "name": "cyberduckandy/blacklist",
+    "name": "Andrew-Mc-Cormack/blacklist",
     "description": "Block users and log access to your silverstripe application based on IP, referer, or host",
     "type": "silverstripe-module",
-    "homepage": "http://github.com/cyberduckandy/blacklist",
-    "keywords": ["silverstripe","traffic","blocking"],
+    "homepage": "http://github.com/Andrew-Mc-Cormack/blacklist",
+    "keywords": ["silverstripe","logging","traffic","blocking"],
     "license": "MIT",
     "authors": [
         {
@@ -12,7 +12,7 @@
         }
     ],
     "support": {
-        "issues": "http://github.com/cyberduckandy/blacklist/issues"
+        "issues": "http://github.com/Andrew-Mc-Cormack/blacklist/issues"
     },
     "minimum-stability": "dev",
     "require": {
