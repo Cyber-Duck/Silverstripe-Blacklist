@@ -21,6 +21,13 @@ class BlockModel extends DataObject {
 		'referer'     => 'Varchar(255)',
 		);
 
+	public static $summary_fields = array(
+		'description' => 'Description',
+		'ip' 	      => 'IP',
+		'host'		  => 'Host',
+		'referer'     => 'Referer'
+  	);
+
 	/**
 	 * @static string $singular_name singular admin name
 	 **/
