@@ -5,7 +5,7 @@
  * logged time, and page URL.
  *
  * @package silverstripe-blacklist
- * @license BSD License http://www.silverstripe.org/bsd-license
+ * @license MIT License https://github.com/Andrew-Mc-Cormack/Silverstripe-Blacklist/blob/master/LICENSE
  * @author  <andrewm@cyber-duck.co.uk>
  **/
 class BlacklistLogger {

@@ -16,7 +16,7 @@
  * for .htaccess blocking as troublesome users will actually make it into your app. 
  *
  * @package silverstripe-blacklist
- * @license BSD License http://www.silverstripe.org/bsd-license
+ * @license MIT License https://github.com/Andrew-Mc-Cormack/Silverstripe-Blacklist/blob/master/LICENSE
  * @author  <andrewm@cyber-duck.co.uk>
  **/
 class BlockerModel extends DataObject {

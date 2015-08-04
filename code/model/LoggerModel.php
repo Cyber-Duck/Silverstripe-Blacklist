@@ -7,7 +7,7 @@
  * but instead is inserted through our BlacklistLogger class.
  *
  * @package silverstripe-blacklist
- * @license BSD License http://www.silverstripe.org/bsd-license
+ * @license MIT License https://github.com/Andrew-Mc-Cormack/Silverstripe-Blacklist/blob/master/LICENSE
  * @author  <andrewm@cyber-duck.co.uk>
  **/
 class LoggerModel extends DataObject {
