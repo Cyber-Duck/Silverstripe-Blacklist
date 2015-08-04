@@ -1,5 +1,6 @@
 <?php
 return array(
 	'googlebot',
-	'msn-bot'
+	'msn-bot',
+	'yandex'
 );
