@@ -1,8 +1,8 @@
 {
-    "name": "Andrew-Mc-Cormack/blacklist",
+    "name": "Andrew-Mc-Cormack/Silverstripe-Blacklist",
     "description": "Block users and log access to your silverstripe application based on IP, referer, or host",
     "type": "silverstripe-module",
-    "homepage": "http://github.com/Andrew-Mc-Cormack/blacklist",
+    "homepage": "http://github.com/Andrew-Mc-Cormack/Silverstripe-Blacklist",
     "keywords": ["silverstripe","logging","traffic","blocking"],
     "license": "MIT",
     "authors": [
@@ -12,7 +12,7 @@
         }
     ],
     "support": {
-        "issues": "http://github.com/Andrew-Mc-Cormack/blacklist/issues"
+        "issues": "http://github.com/Andrew-Mc-Cormack/Silverstripe-Blacklist/issues"
     },
     "minimum-stability": "dev",
     "require": {
@@ -22,6 +22,6 @@
         "phpunit/phpunit": "4.7.*"
     },
     "extra": {
-        "installer-name": "blacklist"
+        "installer-name": "Silverstripe-Blacklist"
     }
 }
