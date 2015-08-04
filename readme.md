@@ -45,7 +45,7 @@ If you visit your site admin you should see two new entries in your CMS admin me
 - Blocked Users
 
 ## About
-I'm a Web Developer based in London and work for a digital agency specialising in user-experience called [Cyber Duck](http://www.cyber-duck.co.uk/)
+I'm a Web Developer based in London and work for a digital agency specialising in user-experience called [Cyber Duck](https://www.cyber-duck.co.uk/)
 
 ## License
 
