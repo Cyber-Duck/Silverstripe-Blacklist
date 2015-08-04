@@ -22,6 +22,6 @@
         "phpunit/phpunit": "4.7.*"
     },
     "extra": {
-        "installer-name": "Silverstripe-Blacklist"
+        "installer-name": "blacklist"
     }
 }
