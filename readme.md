@@ -24,14 +24,20 @@ Run composer install and composer update to download the module
 Create a new blacklist instance. 
 If you wish to run Blacklist app-wide then you can call it in your Page_Controller, or if you want it page specific then you can call it in the specific Page controller(s). You should probably run it app wide by default.
 
-    $blacklist = new Blacklist();
-    $blacklist->run();
+```php  
+<?php
+$blacklist = new Blacklist();
+$blacklist->run();
+```
 
 If you need to set any extra configuration options, do so before you call the run method
 
-    $blacklist = new Blacklist()
-    $blacklist->logBots(false);
-    $blacklist->run();
+```php  
+<?php
+$blacklist = new Blacklist();
+$blacklist->logBots(false);
+$blacklist->run();
+```
 
 Append the following to your app URL  
 **/dev/build?flush=all**  
