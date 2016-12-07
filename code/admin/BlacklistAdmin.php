@@ -8,43 +8,75 @@
  **/
 class BlacklistAdmin extends ModelAdmin
 {
-	/**
-	 * @static array $managed_models This class manages our BlockerModel
-	 **/
+    /**
+     *
+     *
+     * @since version 1.0.0
+     *
+     * @config array $managed_models
+     **/
 	private static $managed_models = ['LoggedUser', 'BlockedUser'];
 
-	/**
-	 * @static string $url_segment the CMS URL segment
-	 **/
+    /**
+     *
+     *
+     * @since version 1.0.0
+     *
+     * @config string $url_segment
+     **/
 	private static $url_segment = 'blacklist';
 
-	/**
-	 * @static string $menu_title The CMS menu link text
-	 **/
+    /**
+     *
+     *
+     * @since version 1.0.0
+     *
+     * @config string $menu_title
+     **/
 	private static $menu_title = 'Blacklist';
 
-	/**
-	 * @static string $menu_icon The CMS menu icon
-	 **/
+    /**
+     *
+     *
+     * @since version 1.0.0
+     *
+     * @config string $menu_icon
+     **/
 	private static $menu_icon = 'blacklist/images/menu-icons/16x16/block.png';
 
-	/**
-	 * @static string $page_length the number of records to show in the CMS grid
-	 **/
+    /**
+     *
+     *
+     * @since version 1.0.0
+     *
+     * @config int $page_length
+     **/
 	private static $page_length = 100;
 
-	/**
-	 * @static string $menu_priority Set high so this will be last CMS menu item
-	 **/
+    /**
+     *
+     *
+     * @since version 1.0.0
+     *
+     * @config int $menu_priority
+     **/
 	private static $menu_priority = -100;
 
-	/**
-	 * @static array $model_importers Model importing arrays
-	 **/
+    /**
+     *
+     *
+     * @since version 1.0.0
+     *
+     * @config array $model_importers
+     **/
 	private static $model_importers = [];
 
-	/**
-	 * @static boolean $showImportForm Show import form
-	 **/
+    /**
+     *
+     *
+     * @since version 1.0.0
+     *
+     * @config bool $showImportForm
+     **/
 	public $showImportForm = false;
 }

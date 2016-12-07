@@ -1,21 +1,83 @@
 <?php
-
+/**
+ * Blacklist
+ *
+ * @package silverstripe-blacklist
+ * @license MIT License https://github.com/Cyber-Duck/Silverstripe-Blacklist/blob/master/LICENSE
+ * @author  <andrewm@cyber-duck.co.uk>
+ **/
 class BlackList
 {
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @var array $bots
+     **/
 	private $bots = [];
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @var string $type
+     **/
 	private $type = 'human';
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @var string $ip
+     **/
 	private $ip;
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @var string $host
+     **/
 	private $host;
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @var string $referer
+     **/
 	private $referer;
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @var bool $logUsers
+     **/
 	private $logUsers = true;
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @var bool $logBots
+     **/
 	private $logBots = true;
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @var array $ipHeaders
+     **/
 	private $ipHeaders = [
 		'HTTP_CLIENT_IP',
 		'HTTP_X_FORWARDED_FOR',
@@ -26,6 +88,13 @@ class BlackList
 		'REMOTE_ADDR'
 	];
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return void
+     **/
 	public function __construct()
 	{
 		$this->bots = Config::inst()->get('Blacklist', 'bots');
@@ -36,56 +105,145 @@ class BlackList
 		$this->setUserReferer();
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @param bool $enabled
+     *
+     * @return void
+     **/
 	public function logUsers($enabled = true)
 	{
 		$this->logUsers = $enabled;
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @param bool $enabled
+     *
+     * @return void
+     **/
 	public function logBots($enabled = true)
 	{
 		$this->logBots = $enabled;
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @param string $type
+     *
+     * @return void
+     **/
 	public function setType($type)
 	{
 		$this->type = $type;
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @param string $ip
+     *
+     * @return void
+     **/
 	public function setIP($ip)
 	{
 		$this->ip = $ip;
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @param string $host
+     *
+     * @return void
+     **/
 	public function setHost($host)
 	{
 		$this->host = $host;
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @param string $referer
+     *
+     * @return void
+     **/
 	public function setReferer($referer)
 	{
 		$this->referer = $referer;
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return string
+     **/
 	public function getType()
 	{
 		return $this->type;
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return string
+     **/
 	public function getIP()
 	{
 		return $this->ip;
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return string
+     **/
 	public function getHost()
 	{
 		return $this->host;
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return string
+     **/
 	public function getReferer()
 	{
 		return $this->referer;
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return void
+     **/
 	public function doLog()
 	{
 		if($this->logUsers === true) {
@@ -100,6 +258,13 @@ class BlackList
 		}
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return void
+     **/
 	public function doBlock()
 	{
 		foreach(BlockedUser::get() as $blocked) {
@@ -119,6 +284,13 @@ class BlackList
 		}
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return void
+     **/
 	private function setUserType()
 	{
 		foreach($this->bots as $bot) {
@@ -128,6 +300,13 @@ class BlackList
 		}
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return void
+     **/
 	private function setUserIP()
 	{
 		foreach($this->ipHeaders as $header) {
@@ -147,16 +326,37 @@ class BlackList
 		}
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return void
+     **/
 	private function setUserHost()
 	{
 		if(isset($this->ip)) $this->setHost(gethostbyaddr($this->ip));
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return void
+     **/
 	private function setUserReferer()
 	{
 		if(isset($_SERVER['HTTP_REFERER'])) $this->setReferer($_SERVER['HTTP_REFERER']);
 	}
 
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return void
+     **/
 	private function writeLog()
 	{
 		$logger = LoggedUser::create();
@@ -169,7 +369,14 @@ class BlackList
 
 		$logger->write();
 	}
-	
+
+    /**
+     * 
+     *
+     * @since version 1.0.0
+     *
+     * @return void
+     **/
 	private function forbidden()
 	{
 		header('HTTP/1.0 403 Forbidden');

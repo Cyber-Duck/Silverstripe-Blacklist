@@ -1,37 +1,36 @@
 <?php
 /**
- * LoggerModel
- *
- * This sets up our database fields to store information about our logged traffic
- * Just like other data objects; the information in accessable in our admin CMS.
- * Data is not inserted into this database table through the admin system CMS
- * but instead is inserted through our BlacklistLogger class.
+ * LoggedUser
  *
  * @package silverstripe-blacklist
- * @license MIT License https://github.com/Andrew-Mc-Cormack/Silverstripe-Blacklist/blob/master/LICENSE
+ * @license MIT License https://github.com/Cyber-Duck/Silverstripe-Blacklist/blob/master/LICENSE
  * @author  <andrewm@cyber-duck.co.uk>
  **/
 class LoggedUser extends DataObject
 {
     /**
+     * Model database fields
+     *
      * @since version 1.0.0
      *
-     * @config array $db Model database fields
+     * @config array $db
      **/
 	private static $db = [
-		'Type' 	   => 'Varchar(255)',
-		'Ip' 	   => 'Varchar(255)',
-		'Host' 	   => 'Varchar(255)',
-		'Referer'  => 'Varchar(255)',
-		'Url'      => 'Varchar(255)'
+		'Type' 	   => 'Varchar(256)',
+		'Ip' 	   => 'Varchar(256)',
+		'Host' 	   => 'Varchar(256)',
+		'Referer'  => 'Varchar(256)',
+		'Url'      => 'Varchar(256)'
 	];
 
     /**
+     * Fields in the Grid field
+     *
      * @since version 1.0.0
      *
-     * @config array $summary_fields Fields in the Grid field
+     * @config array $summary_fields
      **/
-	public static $summary_fields = [
+	private static $summary_fields = [
 		'Created'  => 'Logged',
 		'Type' 	   => 'User',
 		'Ip' 	   => 'IP',
@@ -41,28 +40,36 @@ class LoggedUser extends DataObject
   	];
 
     /**
+     * Model CMS grid sorting
+     *
      * @since version 1.0.0
      *
-     * @config string $default_sort Sort tags by name by default
+     * @config string $default_sort
      **/
     private static $default_sort = 'Created DESC';
 
     /**
+     * Singular English title
+     *
      * @since version 1.0.0
      *
-     * @config string $singular_name Singular English name
+     * @config string $singular_name 
      **/
     private static $singular_name = 'Logged User';
 
     /**
+     * Plural English title
+     *
      * @since version 1.0.0
      *
-     * @config string $plural_name Plural English name
+     * @config string $plural_name 
      **/
     private static $plural_name = 'Logged Users';
 
 	/**
 	 * Create the CMS fields where we can enter any blocked data
+	 *
+     * @since version 1.0.0
 	 * 
 	 * @return object
 	 **/
