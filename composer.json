@@ -20,7 +20,7 @@
         "issues": "http://github.com/cyber-duck/silverstripe-blacklist/issues"
     },
     "extra": {
-        "installer-name": "silverstripe-blacklist"
+        "installer-name": "blacklist"
     },
     "prefer-stable": true
 }
