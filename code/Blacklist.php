@@ -1,188 +1,178 @@
 <?php
-/**
- * Blacklist
- * The core of the Blacklist module is responsible for setting dependencies and 
- * settings and initialising the module functionality.
- *
- * @package silverstripe-blacklist
- * @license MIT License https://github.com/Andrew-Mc-Cormack/Silverstripe-Blacklist/blob/master/LICENSE
- * @author  <andrewm@cyber-duck.co.uk>
- **/
-class Blacklist {
 
-	/**
-	 * @var boolean $logTraffic Set whether to log traffic to database
-	 **/
-	private $logTraffic = true;
+class BlackList
+{
+	private $bots = [];
 
-	/**
-	 * @var boolean $logBlocked Set whether to log blocked users to database
-	 **/
-	private $logBlocked = false;
+	private $type = 'human';
 
-	/**
-	 * @var boolean $logBots Set whether to log bots to database
-	 **/
+	private $ip;
+
+	private $host;
+
+	private $referer;
+
+	private $logUsers = true;
+
 	private $logBots = true;
 
-	/**
-	 * @var string $userIP The current user IP
-	 **/
-	private $userIP;
+	private $ipHeaders = [
+		'HTTP_CLIENT_IP',
+		'HTTP_X_FORWARDED_FOR',
+		'HTTP_X_FORWARDED',
+		'HTTP_X_CLUSTER_CLIENT_IP',
+		'HTTP_FORWARDED_FOR',
+		'HTTP_FORWARDED',
+		'REMOTE_ADDR'
+	];
 
-	/**
-	 * @var string $userHost The current user host
-	 **/
-	private $userHost;
+	public function __construct()
+	{
+		$this->bots = Config::inst()->get('Blacklist', 'bots');
 
-	/**
-	 * @var string $userReferer The current user referer
-	 **/
-	private $userReferer;
+		$this->setUserType();
+		$this->setUserIP();
+		$this->setUserHost();
+		$this->setUserReferer();
+	}
 
-	/**
-	 * Our constructor tries to attain our user IP, referer, and host info
-	 *
-	 * @return void
-	 **/
-	function __construct()
+	public function logUsers($enabled = true)
 	{
-		$this->getUserIP();
-		$this->getUserHost();
-		$this->getUserReferer();
+		$this->logUsers = $enabled;
 	}
-	
-	/**
-	 * A test method to verify our module installation
-	 *
-	 * @return boolean true
-	 **/
-	public function test()
-	{
-		return true;
-	}
-	
-	/**
-	 * Set whether to log traffic to the database
-	 *
-	 * @param boolean $save Set to true or false
-	 *
-	 * @return void
-	 **/
-	public function logTraffic($save = true)
-	{
-		$this->logTraffic = $save;
-	}
-	
-	/**
-	 * Set whether to log blocked user traffic to database
-	 *
-	 * @param boolean $save Set to true or false
-	 *
-	 * @return void
-	 **/
-	public function logBlocked($save = false)
-	{
-		$this->logBlocked = $save;
-	}
-	
-	/**
-	 * Set whether to log bot user traffic to database
-	 *
-	 * @param boolean $save Set to true or false
-	 *
-	 * @return void
-	 **/
-	public function logBots($save = true)
-	{
-		$this->logBots = $save;
-	}
-	
-	/**
-	 * Check the available $_SERVER variables to get the user IP address
-	 *
-	 * @return void
-	 **/
-	private function getUserIP()
-	{
-		// $_SERVER variables
-		$serverIPs = array(
-			'HTTP_CLIENT_IP',
-			'HTTP_X_FORWARDED_FOR',
-			'HTTP_X_FORWARDED',
-			'HTTP_X_CLUSTER_CLIENT_IP',
-			'HTTP_FORWARDED_FOR',
-			'HTTP_FORWARDED',
-			'REMOTE_ADDR'
-		);
 
-		foreach($serverIPs as $key) :
-			if(array_key_exists($key, $_SERVER) === true) :
-				foreach (explode(',', $_SERVER[$key]) as $ip) :
+	public function logBots($enabled = true)
+	{
+		$this->logBots = $enabled;
+	}
+
+	public function setType($type)
+	{
+		$this->type = $type;
+	}
+
+	public function setIP($ip)
+	{
+		$this->ip = $ip;
+	}
+
+	public function setHost($host)
+	{
+		$this->host = $host;
+	}
+
+	public function setReferer($referer)
+	{
+		$this->referer = $referer;
+	}
+
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	public function getIP()
+	{
+		return $this->ip;
+	}
+
+	public function getHost()
+	{
+		return $this->host;
+	}
+
+	public function getReferer()
+	{
+		return $this->referer;
+	}
+
+	public function doLog()
+	{
+		if($this->logUsers === true) {
+			if($this->type == 'human') {
+				$this->writeLog();
+			}
+		}
+		if($this->logBots === true) {
+			if($this->type == 'bot') {
+				$this->writeLog();
+			}
+		}
+	}
+
+	public function doBlock()
+	{
+		foreach(BlockedUser::get() as $blocked) {
+			if($blocked->Ip) {
+				if($this->ip == $blocked->Ip) $this->forbidden();
+			}
+			if($blocked->IpMin && $blocked->IpMax) {
+				$ip  = ip2long($this->ip);
+				$min = ip2long($blocked->ipMin);
+				$max = ip2long($blocked->ipMax);
+				
+				if($ip >= $min && $ip <= $max) $this->forbidden();
+			}
+			if(strpos($this->host, $blocked->host) !== false) $this->forbidden();
+
+			if(strpos($this->referer, $blocked->referer) !== false) $this->forbidden();
+		}
+	}
+
+	private function setUserType()
+	{
+		foreach($this->bots as $bot) {
+			if(strpos($bot, $this->host) !== false) {
+				return $this->setType('bot');
+			}
+		}
+	}
+
+	private function setUserIP()
+	{
+		foreach($this->ipHeaders as $header) {
+			if(array_key_exists($header, $_SERVER) === true) {
+				foreach (explode(',', $_SERVER[$header]) as $ip) :
 					$ip = trim($ip);
 
-					// Validate user IP address
 					if(filter_var($ip
 						, FILTER_VALIDATE_IP
 						, FILTER_FLAG_NO_PRIV_RANGE 
-						| FILTER_FLAG_NO_RES_RANGE) !== false) :
+						| FILTER_FLAG_NO_RES_RANGE) !== false) {
 
-						$this->userIP = $ip;
-					endif;
-				endforeach;
-			endif;
-		endforeach;
+						return $this->setIP($ip);
+					}
+				}
+			}
+		}
+	}
+
+	private function setUserHost()
+	{
+		if(isset($this->ip)) $this->setHost(gethostbyaddr($this->ip));
+	}
+
+	private function setUserReferer()
+	{
+		if(isset($_SERVER['HTTP_REFERER'])) $this->setReferer($_SERVER['HTTP_REFERER']);
+	}
+
+	private function writeLog()
+	{
+		$logger = LoggedUser::create();
+
+		$logger->type = $this->getType();
+		$logger->ip = $this->getIP();
+		$logger->host = $this->getHost();
+		$logger->referer = $this->getReferer();
+		$logger->Url = Controller::curr()->getRequest()->getUrl();
+
+		$logger->write();
 	}
 	
-	/**
-	 * Get the user host information by IP address
-	 *
-	 * @return void
-	 **/
-	private function getUserHost()
+	private function forbidden()
 	{
-		if(isset($this->userIP)) :
-			$this->userHost = gethostbyaddr($this->userIP);
-		endif;
-	}
-	
-	/**
-	 * Get the user referer if the $_SERVER['HTTP_REFERER'] variable is set
-	 *
-	 * @return void
-	 **/
-	private function getUserReferer()
-	{
-		if(isset($_SERVER['HTTP_REFERER'])) :
-			$this->userReferer = $_SERVER['HTTP_REFERER'];
-		endif;
-	}
-	
-	/**
-	 * Run the blacklist core and log traffic or block the user if necessary
-	 *
-	 * @return void
-	 **/
-	public function run()
-	{
-		// Initiate a logging object and pass in our user info
-		$logger = new BlacklistLogger(
-			$this->userIP,
-			$this->userHost,
-			$this->userReferer,
-			$this->logBots
-		);
-
-		// Log the traffic information if required
-		if($this->logTraffic === true) :
-			$logger->save();
-		endif;
-
-		// Block the user if required
-		$blocker = new BlacklistBlocker(
-			$this->userIP,
-			$this->userHost,
-			$this->userReferer
-		);
+		header('HTTP/1.0 403 Forbidden');
+		die;
 	}
 }
