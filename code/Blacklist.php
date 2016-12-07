@@ -132,7 +132,7 @@ class BlackList
 	{
 		foreach($this->ipHeaders as $header) {
 			if(array_key_exists($header, $_SERVER) === true) {
-				foreach (explode(',', $_SERVER[$header]) as $ip) :
+				foreach (explode(',', $_SERVER[$header]) as $ip) {
 					$ip = trim($ip);
 
 					if(filter_var($ip
