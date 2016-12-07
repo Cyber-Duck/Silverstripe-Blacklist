@@ -3,6 +3,6 @@ Blacklist:
     - 'humans'
     - 'bots'
   bots:
-	- 'googlebot'
-	- 'msn-bot'
-	- 'yandex'
+    - 'googlebot'
+    - 'msn-bot'
+    - 'yandex'
