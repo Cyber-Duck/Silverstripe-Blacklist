@@ -10,7 +10,7 @@ A SilverStripe module for logging traffic and blocking users. Takes advantage of
 
 ## Features
 
-  - Logs the user type, IP address, host, referer, as well as the URL requested and logged time
+  - Logs the user type, IP, host, referer, and URL
   - Blocks users based on IP address, host, or referer
 
 ## Guides
