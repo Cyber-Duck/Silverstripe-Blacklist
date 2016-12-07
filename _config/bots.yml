@@ -1,0 +1,8 @@
+Blacklist:
+  log:
+    - 'humans'
+    - 'bots'
+  bots:
+	- 'googlebot'
+	- 'msn-bot'
+	- 'yandex'
