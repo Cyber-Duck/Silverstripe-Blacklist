@@ -77,17 +77,20 @@ class BlockedUser extends DataObject
 	{
 		$fields = parent::getCMSFields();
 
-		$fields->addFieldsToTab('Root.Main', [
-			TextField::create('Description'),
-			HeaderField::create('IP Data'),
-			TextField::create('Ip', 'IP Address'),
-			TextField::create('IpMin', 'Min IP range'),
-			TextField::create('IpMax', 'Max IP range'),
-			HeaderField::create('Host Data'),
-			TextField::create('Host', 'Hostname'),
-			HeaderField::create('Referer Data'),
-			TextField::create('Referer', 'Referer URL')
-		]);
+		$fields->addFieldToTab('Root.Main', HeaderField::create('Blocked User'));
+		$fields->addFieldToTab('Root.Main', ReadonlyField::create('Created'));
+		$fields->addFieldToTab('Root.Main', TextareaField::create('Description'));
+
+		$fields->addFieldToTab('Root.Main', HeaderField::create('IP Data')->setHeadingLevel(3));
+		$fields->addFieldToTab('Root.Main', TextField::create('Ip', 'IP Address'));
+		$fields->addFieldToTab('Root.Main', TextField::create('IpMin', 'Min IP range'));
+		$fields->addFieldToTab('Root.Main', TextField::create('IpMax', 'Max IP range'));
+
+		$fields->addFieldToTab('Root.Main', HeaderField::create('Host Data')->setHeadingLevel(3));
+		$fields->addFieldToTab('Root.Main', TextField::create('Host', 'Hostname'));
+
+		$fields->addFieldToTab('Root.Main', HeaderField::create('Referer Data')->setHeadingLevel(3));
+		$fields->addFieldToTab('Root.Main', TextField::create('Referer', 'Referer URL'));
 
 		return $fields;
 	}

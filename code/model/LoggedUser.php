@@ -77,13 +77,13 @@ class LoggedUser extends DataObject
 	{
 		$fields = parent::getCMSFields();
 
-		$fields->addFieldsToTab('Root.Main', [
-			HeaderField::create('User Data'),
-			TextField::create('Ip', 'IP Address'),
-			TextField::create('Host', 'Hostname'),
-			TextField::create('Referer', 'Referer URL'),
-			TextField::create('Url', 'URL')
-		]);
+		$fields->addFieldToTab('Root.Main', HeaderField::create('Logged User'));
+		$fields->addFieldToTab('Root.Main', ReadonlyField::create('Created', 'Logged'));
+		$fields->addFieldToTab('Root.Main', ReadonlyField::create('Type', 'User Type'));
+		$fields->addFieldToTab('Root.Main', ReadonlyField::create('Ip', 'IP Address'));
+		$fields->addFieldToTab('Root.Main', ReadonlyField::create('Host', 'Hostname'));
+		$fields->addFieldToTab('Root.Main', ReadonlyField::create('Referer', 'Referer URL'));
+		$fields->addFieldToTab('Root.Main', ReadonlyField::create('Url', 'URL'));
 
 		return $fields;
 	}
