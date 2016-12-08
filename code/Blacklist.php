@@ -379,7 +379,6 @@ class BlackList
      **/
 	private function forbidden()
 	{
-		header('HTTP/1.0 403 Forbidden');
-		die;
+		return Controller::curr()->httpError(403, 'Blacklisted');
 	}
 }
