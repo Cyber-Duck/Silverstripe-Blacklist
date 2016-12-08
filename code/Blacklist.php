@@ -2,6 +2,8 @@
 /**
  * Blacklist
  *
+ * Logs user details and blocks users based on IP, host, or referer.
+ *
  * @package silverstripe-blacklist
  * @license MIT License https://github.com/Cyber-Duck/Silverstripe-Blacklist/blob/master/LICENSE
  * @author  <andrewm@cyber-duck.co.uk>
@@ -9,7 +11,7 @@
 class BlackList
 {
     /**
-     * 
+     * Array of bot names
      *
      * @since version 1.0.0
      *
@@ -18,7 +20,7 @@ class BlackList
 	private $bots = [];
 
     /**
-     * 
+     * Current user type
      *
      * @since version 1.0.0
      *
@@ -27,7 +29,7 @@ class BlackList
 	private $type = 'human';
 
     /**
-     * 
+     * Current user IP
      *
      * @since version 1.0.0
      *
@@ -45,7 +47,7 @@ class BlackList
 	private $host;
 
     /**
-     * 
+     * Current user referer
      *
      * @since version 1.0.0
      *
@@ -54,7 +56,7 @@ class BlackList
 	private $referer;
 
     /**
-     * 
+     * Log users
      *
      * @since version 1.0.0
      *
@@ -63,7 +65,7 @@ class BlackList
 	private $logUsers = true;
 
     /**
-     * 
+     * Log bots
      *
      * @since version 1.0.0
      *
@@ -72,7 +74,7 @@ class BlackList
 	private $logBots = true;
 
     /**
-     * 
+     * Array of Server headers
      *
      * @since version 1.0.0
      *
@@ -89,7 +91,7 @@ class BlackList
 	];
 
     /**
-     * 
+     * Set up default configuration
      *
      * @since version 1.0.0
      *
@@ -106,7 +108,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Enable logging of users
      *
      * @since version 1.0.0
      *
@@ -120,7 +122,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Enable logging of bots
      *
      * @since version 1.0.0
      *
@@ -134,7 +136,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Set the current user type
      *
      * @since version 1.0.0
      *
@@ -148,7 +150,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Set the current user IP
      *
      * @since version 1.0.0
      *
@@ -162,7 +164,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Set the current user host
      *
      * @since version 1.0.0
      *
@@ -176,7 +178,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Set the current user referer
      *
      * @since version 1.0.0
      *
@@ -190,7 +192,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Get the current user type
      *
      * @since version 1.0.0
      *
@@ -202,7 +204,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Get the current user IP
      *
      * @since version 1.0.0
      *
@@ -214,7 +216,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Get the current user host
      *
      * @since version 1.0.0
      *
@@ -226,7 +228,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Get the current user referer
      *
      * @since version 1.0.0
      *
@@ -238,7 +240,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Perform the logging action
      *
      * @since version 1.0.0
      *
@@ -259,7 +261,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Perform the blocking action
      *
      * @since version 1.0.0
      *
@@ -285,7 +287,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Set the default user type
      *
      * @since version 1.0.0
      *
@@ -301,7 +303,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Set the default user IP
      *
      * @since version 1.0.0
      *
@@ -323,7 +325,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Set the default user host
      *
      * @since version 1.0.0
      *
@@ -335,7 +337,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Set the default user referer
      *
      * @since version 1.0.0
      *
@@ -347,7 +349,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Write the current user log
      *
      * @since version 1.0.0
      *
@@ -367,7 +369,7 @@ class BlackList
 	}
 
     /**
-     * 
+     * Forbidden user redirect
      *
      * @since version 1.0.0
      *

@@ -9,7 +9,7 @@
 class BlacklistAdmin extends ModelAdmin
 {
     /**
-     *
+     * CMS models
      *
      * @since version 1.0.0
      *
@@ -18,7 +18,7 @@ class BlacklistAdmin extends ModelAdmin
 	private static $managed_models = ['LoggedUser', 'BlockedUser'];
 
     /**
-     *
+     * CMS URL Segment
      *
      * @since version 1.0.0
      *
@@ -27,7 +27,7 @@ class BlacklistAdmin extends ModelAdmin
 	private static $url_segment = 'blacklist';
 
     /**
-     *
+     * CMS nav title
      *
      * @since version 1.0.0
      *
@@ -36,7 +36,7 @@ class BlacklistAdmin extends ModelAdmin
 	private static $menu_title = 'Blacklist';
 
     /**
-     *
+     * CMS nav icon
      *
      * @since version 1.0.0
      *
@@ -45,7 +45,7 @@ class BlacklistAdmin extends ModelAdmin
 	private static $menu_icon = 'blacklist/images/menu-icons/16x16/block.png';
 
     /**
-     *
+     * CMS grid length
      *
      * @since version 1.0.0
      *
@@ -54,7 +54,7 @@ class BlacklistAdmin extends ModelAdmin
 	private static $page_length = 100;
 
     /**
-     *
+     * CMS menu priority
      *
      * @since version 1.0.0
      *
@@ -63,7 +63,7 @@ class BlacklistAdmin extends ModelAdmin
 	private static $menu_priority = -100;
 
     /**
-     *
+     * Model importers
      *
      * @since version 1.0.0
      *
@@ -72,7 +72,7 @@ class BlacklistAdmin extends ModelAdmin
 	private static $model_importers = [];
 
     /**
-     *
+     * Show import form
      *
      * @since version 1.0.0
      *
