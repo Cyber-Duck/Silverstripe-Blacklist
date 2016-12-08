@@ -361,10 +361,10 @@ class BlackList
 	{
 		$logger = LoggedUser::create();
 
-		$logger->type = $this->getType();
-		$logger->ip = $this->getIP();
-		$logger->host = $this->getHost();
-		$logger->referer = $this->getReferer();
+		$logger->Type = $this->getType();
+		$logger->Ip = $this->getIP();
+		$logger->Host = $this->getHost();
+		$logger->Referer = $this->getReferer();
 		$logger->Url = Controller::curr()->getRequest()->getUrl();
 
 		$logger->write();
