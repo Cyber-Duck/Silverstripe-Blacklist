@@ -31,7 +31,6 @@ class Page_Controller extends ContentController
 
         $blacklist = new Blacklist();
 		$blacklist->doLog();
-		$blacklist->run();
     }
 }
 ```
@@ -49,7 +48,6 @@ class Page_Controller extends ContentController
 
         $blacklist = new Blacklist();
         $blacklist->doBlock();
-        $blacklist->run();
     }
 }
 ```
