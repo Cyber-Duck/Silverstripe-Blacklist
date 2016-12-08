@@ -32,7 +32,7 @@ class BlockedUser extends DataObject
      * @config array $summary_fields
      **/
 	private static $summary_fields = [
-		'Created'     => 'Logged',
+		'Created'     => 'Created',
 		'Description' => 'Description',
 		'Ip' 	      => 'IP',
 		'Host'		  => 'Host',
