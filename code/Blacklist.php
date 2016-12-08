@@ -269,7 +269,7 @@ class BlackList
 	{
 		foreach(BlockedUser::get() as $blocked) {
 			if($blocked->Ip) {
-				if($this->ip == $blocked->Ip) $this->forbidden();
+				if(trim($this->ip) == trim($blocked->Ip)) $this->forbidden();
 			}
 			if($blocked->IpMin && $blocked->IpMax) {
 				$ip  = ip2long($this->ip);
@@ -294,7 +294,7 @@ class BlackList
 	private function setUserType()
 	{
 		foreach($this->bots as $bot) {
-			if(strpos($bot, $this->host) !== false) {
+			if(strpos($this->host, $bot) !== false) {
 				return $this->setType('bot');
 			}
 		}
@@ -310,15 +310,11 @@ class BlackList
 	private function setUserIP()
 	{
 		foreach($this->ipHeaders as $header) {
-			if(array_key_exists($header, $_SERVER) === true) {
+			if(array_key_exists($header, $_SERVER)) {
 				foreach (explode(',', $_SERVER[$header]) as $ip) {
 					$ip = trim($ip);
 
-					if(filter_var($ip
-						, FILTER_VALIDATE_IP
-						, FILTER_FLAG_NO_PRIV_RANGE 
-						| FILTER_FLAG_NO_RES_RANGE) !== false) {
-
+					if(filter_var($ip, FILTER_VALIDATE_IP)) {
 						return $this->setIP($ip);
 					}
 				}
