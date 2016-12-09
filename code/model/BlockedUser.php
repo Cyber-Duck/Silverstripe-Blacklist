@@ -2,8 +2,10 @@
 /**
  * BlockedUser
  *
+ * Model to hold blocked user data
+ *
  * @package silverstripe-blacklist
- * @license MIT License https://github.com/Cyber-Duck/Silverstripe-Blacklist/blob/master/LICENSE
+ * @license MIT License https://github.com/cyber-duck/silverstripe-blacklist/blob/master/LICENSE
  * @author  <andrewm@cyber-duck.co.uk>
  **/
 class BlockedUser extends DataObject

@@ -1,9 +1,11 @@
 <?php
 /**
- * Blacklist Admin
+ * BlacklistAdmin
+ *
+ * CMS model manager for logged and blocked users
  *
  * @package silverstripe-blacklist
- * @license MIT License https://github.com/Cyber-Duck/Silverstripe-Blacklist/blob/master/LICENSE
+ * @license MIT License https://github.com/cyber-duck/silverstripe-blacklist/blob/master/LICENSE
  * @author  <andrewm@cyber-duck.co.uk>
  **/
 class BlacklistAdmin extends ModelAdmin
