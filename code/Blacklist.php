@@ -17,7 +17,7 @@ class BlackList
      *
      * @var array $bots
      **/
-	private $bots = [];
+    private $bots = [];
 
     /**
      * Current user type
@@ -26,7 +26,7 @@ class BlackList
      *
      * @var string $type
      **/
-	private $type = 'human';
+    private $type = 'human';
 
     /**
      * Current user IP
@@ -35,7 +35,7 @@ class BlackList
      *
      * @var string $ip
      **/
-	private $ip;
+    private $ip;
 
     /**
      * 
@@ -44,7 +44,7 @@ class BlackList
      *
      * @var string $host
      **/
-	private $host;
+    private $host;
 
     /**
      * Current user referer
@@ -53,7 +53,7 @@ class BlackList
      *
      * @var string $referer
      **/
-	private $referer;
+    private $referer;
 
     /**
      * Log users
@@ -62,7 +62,7 @@ class BlackList
      *
      * @var bool $logUsers
      **/
-	private $logUsers = true;
+    private $logUsers = true;
 
     /**
      * Log bots
@@ -71,7 +71,7 @@ class BlackList
      *
      * @var bool $logBots
      **/
-	private $logBots = true;
+    private $logBots = true;
 
     /**
      * Array of Server headers
@@ -80,15 +80,15 @@ class BlackList
      *
      * @var array $ipHeaders
      **/
-	private $ipHeaders = [
-		'HTTP_CLIENT_IP',
-		'HTTP_X_FORWARDED_FOR',
-		'HTTP_X_FORWARDED',
-		'HTTP_X_CLUSTER_CLIENT_IP',
-		'HTTP_FORWARDED_FOR',
-		'HTTP_FORWARDED',
-		'REMOTE_ADDR'
-	];
+    private $ipHeaders = [
+        'HTTP_CLIENT_IP',
+        'HTTP_X_FORWARDED_FOR',
+        'HTTP_X_FORWARDED',
+        'HTTP_X_CLUSTER_CLIENT_IP',
+        'HTTP_FORWARDED_FOR',
+        'HTTP_FORWARDED',
+        'REMOTE_ADDR'
+    ];
 
     /**
      * Set up default configuration
@@ -97,15 +97,15 @@ class BlackList
      *
      * @return void
      **/
-	public function __construct()
-	{
-		$this->bots = Config::inst()->get('Blacklist', 'bots');
+    public function __construct()
+    {
+        $this->bots = Config::inst()->get('Blacklist', 'bots');
 
-		$this->setUserType();
-		$this->setUserIP();
-		$this->setUserHost();
-		$this->setUserReferer();
-	}
+        $this->setUserType();
+        $this->setUserIP();
+        $this->setUserHost();
+        $this->setUserReferer();
+    }
 
     /**
      * Enable logging of users
@@ -116,10 +116,10 @@ class BlackList
      *
      * @return void
      **/
-	public function logUsers($enabled = true)
-	{
-		$this->logUsers = $enabled;
-	}
+    public function logUsers($enabled = true)
+    {
+        $this->logUsers = $enabled;
+    }
 
     /**
      * Enable logging of bots
@@ -130,10 +130,10 @@ class BlackList
      *
      * @return void
      **/
-	public function logBots($enabled = true)
-	{
-		$this->logBots = $enabled;
-	}
+    public function logBots($enabled = true)
+    {
+        $this->logBots = $enabled;
+    }
 
     /**
      * Set the current user type
@@ -144,10 +144,10 @@ class BlackList
      *
      * @return void
      **/
-	public function setType($type)
-	{
-		$this->type = $type;
-	}
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
 
     /**
      * Set the current user IP
@@ -158,10 +158,10 @@ class BlackList
      *
      * @return void
      **/
-	public function setIP($ip)
-	{
-		$this->ip = $ip;
-	}
+    public function setIP($ip)
+    {
+        $this->ip = $ip;
+    }
 
     /**
      * Set the current user host
@@ -172,10 +172,10 @@ class BlackList
      *
      * @return void
      **/
-	public function setHost($host)
-	{
-		$this->host = $host;
-	}
+    public function setHost($host)
+    {
+        $this->host = $host;
+    }
 
     /**
      * Set the current user referer
@@ -186,10 +186,10 @@ class BlackList
      *
      * @return void
      **/
-	public function setReferer($referer)
-	{
-		$this->referer = $referer;
-	}
+    public function setReferer($referer)
+    {
+        $this->referer = $referer;
+    }
 
     /**
      * Get the current user type
@@ -198,10 +198,10 @@ class BlackList
      *
      * @return string
      **/
-	public function getType()
-	{
-		return $this->type;
-	}
+    public function getType()
+    {
+        return $this->type;
+    }
 
     /**
      * Get the current user IP
@@ -210,10 +210,10 @@ class BlackList
      *
      * @return string
      **/
-	public function getIP()
-	{
-		return $this->ip;
-	}
+    public function getIP()
+    {
+        return $this->ip;
+    }
 
     /**
      * Get the current user host
@@ -222,10 +222,10 @@ class BlackList
      *
      * @return string
      **/
-	public function getHost()
-	{
-		return $this->host;
-	}
+    public function getHost()
+    {
+        return $this->host;
+    }
 
     /**
      * Get the current user referer
@@ -234,10 +234,10 @@ class BlackList
      *
      * @return string
      **/
-	public function getReferer()
-	{
-		return $this->referer;
-	}
+    public function getReferer()
+    {
+        return $this->referer;
+    }
 
     /**
      * Perform the logging action
@@ -246,19 +246,19 @@ class BlackList
      *
      * @return void
      **/
-	public function doLog()
-	{
-		if($this->logUsers === true) {
-			if($this->type == 'human') {
-				$this->writeLog();
-			}
-		}
-		if($this->logBots === true) {
-			if($this->type == 'bot') {
-				$this->writeLog();
-			}
-		}
-	}
+    public function doLog()
+    {
+        if($this->logUsers === true) {
+            if($this->type == 'human') {
+                $this->writeLog();
+            }
+        }
+        if($this->logBots === true) {
+            if($this->type == 'bot') {
+                $this->writeLog();
+            }
+        }
+    }
 
     /**
      * Perform the blocking action
@@ -267,24 +267,24 @@ class BlackList
      *
      * @return void
      **/
-	public function doBlock()
-	{
-		foreach(BlockedUser::get() as $blocked) {
-			if($blocked->Ip) {
-				if(trim($this->ip) == trim($blocked->Ip)) $this->forbidden();
-			}
-			if($blocked->IpMin && $blocked->IpMax) {
-				$ip  = ip2long($this->ip);
-				$min = ip2long($blocked->ipMin);
-				$max = ip2long($blocked->ipMax);
-				
-				if($ip >= $min && $ip <= $max) $this->forbidden();
-			}
-			if(strpos($this->host, $blocked->host) !== false) $this->forbidden();
+    public function doBlock()
+    {
+        foreach(BlockedUser::get() as $blocked) {
+            if($blocked->Ip) {
+                if(trim($this->ip) == trim($blocked->Ip)) $this->forbidden();
+            }
+            if($blocked->IpMin && $blocked->IpMax) {
+                $ip  = ip2long($this->ip);
+                $min = ip2long($blocked->ipMin);
+                $max = ip2long($blocked->ipMax);
+                
+                if($ip >= $min && $ip <= $max) $this->forbidden();
+            }
+            if(strpos($this->host, $blocked->host) !== false) $this->forbidden();
 
-			if(strpos($this->referer, $blocked->referer) !== false) $this->forbidden();
-		}
-	}
+            if(strpos($this->referer, $blocked->referer) !== false) $this->forbidden();
+        }
+    }
 
     /**
      * Set the default user type
@@ -293,14 +293,14 @@ class BlackList
      *
      * @return void
      **/
-	private function setUserType()
-	{
-		foreach($this->bots as $bot) {
-			if(strpos($this->host, $bot) !== false) {
-				return $this->setType('bot');
-			}
-		}
-	}
+    private function setUserType()
+    {
+        foreach($this->bots as $bot) {
+            if(strpos($this->host, $bot) !== false) {
+                return $this->setType('bot');
+            }
+        }
+    }
 
     /**
      * Set the default user IP
@@ -309,20 +309,20 @@ class BlackList
      *
      * @return void
      **/
-	private function setUserIP()
-	{
-		foreach($this->ipHeaders as $header) {
-			if(array_key_exists($header, $_SERVER)) {
-				foreach (explode(',', $_SERVER[$header]) as $ip) {
-					$ip = trim($ip);
+    private function setUserIP()
+    {
+        foreach($this->ipHeaders as $header) {
+            if(array_key_exists($header, $_SERVER)) {
+                foreach (explode(',', $_SERVER[$header]) as $ip) {
+                    $ip = trim($ip);
 
-					if(filter_var($ip, FILTER_VALIDATE_IP)) {
-						return $this->setIP($ip);
-					}
-				}
-			}
-		}
-	}
+                    if(filter_var($ip, FILTER_VALIDATE_IP)) {
+                        return $this->setIP($ip);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Set the default user host
@@ -331,10 +331,10 @@ class BlackList
      *
      * @return void
      **/
-	private function setUserHost()
-	{
-		if(isset($this->ip)) $this->setHost(gethostbyaddr($this->ip));
-	}
+    private function setUserHost()
+    {
+        if(isset($this->ip)) $this->setHost(gethostbyaddr($this->ip));
+    }
 
     /**
      * Set the default user referer
@@ -343,10 +343,10 @@ class BlackList
      *
      * @return void
      **/
-	private function setUserReferer()
-	{
-		if(isset($_SERVER['HTTP_REFERER'])) $this->setReferer($_SERVER['HTTP_REFERER']);
-	}
+    private function setUserReferer()
+    {
+        if(isset($_SERVER['HTTP_REFERER'])) $this->setReferer($_SERVER['HTTP_REFERER']);
+    }
 
     /**
      * Write the current user log
@@ -355,18 +355,18 @@ class BlackList
      *
      * @return void
      **/
-	private function writeLog()
-	{
-		$logger = LoggedUser::create();
+    private function writeLog()
+    {
+        $logger = LoggedUser::create();
 
-		$logger->Type = $this->getType();
-		$logger->Ip = $this->getIP();
-		$logger->Host = $this->getHost();
-		$logger->Referer = $this->getReferer();
-		$logger->Url = Controller::curr()->getRequest()->getUrl();
+        $logger->Type = $this->getType();
+        $logger->Ip = $this->getIP();
+        $logger->Host = $this->getHost();
+        $logger->Referer = $this->getReferer();
+        $logger->Url = Controller::curr()->getRequest()->getUrl();
 
-		$logger->write();
-	}
+        $logger->write();
+    }
 
     /**
      * Forbidden user redirect
@@ -375,8 +375,8 @@ class BlackList
      *
      * @return void
      **/
-	private function forbidden()
-	{
-		return Controller::curr()->httpError(403, 'Blacklisted');
-	}
+    private function forbidden()
+    {
+        return Controller::curr()->httpError(403, 'Blacklisted');
+    }
 }

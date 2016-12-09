@@ -17,7 +17,7 @@ class BlacklistAdmin extends ModelAdmin
      *
      * @config array $managed_models
      **/
-	private static $managed_models = ['LoggedUser', 'BlockedUser'];
+    private static $managed_models = ['LoggedUser', 'BlockedUser'];
 
     /**
      * CMS URL Segment
@@ -26,7 +26,7 @@ class BlacklistAdmin extends ModelAdmin
      *
      * @config string $url_segment
      **/
-	private static $url_segment = 'blacklist';
+    private static $url_segment = 'blacklist';
 
     /**
      * CMS nav title
@@ -35,7 +35,7 @@ class BlacklistAdmin extends ModelAdmin
      *
      * @config string $menu_title
      **/
-	private static $menu_title = 'Blacklist';
+    private static $menu_title = 'Blacklist';
 
     /**
      * CMS nav icon
@@ -44,7 +44,7 @@ class BlacklistAdmin extends ModelAdmin
      *
      * @config string $menu_icon
      **/
-	private static $menu_icon = 'blacklist/images/menu-icons/16x16/block.png';
+    private static $menu_icon = 'blacklist/images/menu-icons/16x16/block.png';
 
     /**
      * CMS grid length
@@ -53,7 +53,7 @@ class BlacklistAdmin extends ModelAdmin
      *
      * @config int $page_length
      **/
-	private static $page_length = 100;
+    private static $page_length = 100;
 
     /**
      * CMS menu priority
@@ -62,7 +62,7 @@ class BlacklistAdmin extends ModelAdmin
      *
      * @config int $menu_priority
      **/
-	private static $menu_priority = -100;
+    private static $menu_priority = -100;
 
     /**
      * Model importers
@@ -71,7 +71,7 @@ class BlacklistAdmin extends ModelAdmin
      *
      * @config array $model_importers
      **/
-	private static $model_importers = [];
+    private static $model_importers = [];
 
     /**
      * Show import form
@@ -80,7 +80,7 @@ class BlacklistAdmin extends ModelAdmin
      *
      * @config bool $showImportForm
      **/
-	public $showImportForm = false;
+    public $showImportForm = false;
 
     /**
      * CMS grid field and edit form config

@@ -27,10 +27,10 @@ class Page_Controller extends ContentController
 {
     public function init()
     {
-    	parent::init();
+        parent::init();
 
         $blacklist = new Blacklist();
-		$blacklist->doLog();
+        $blacklist->doLog();
     }
 }
 ```

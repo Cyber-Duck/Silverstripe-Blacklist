@@ -17,14 +17,14 @@ class BlockedUser extends DataObject
      *
      * @config array $db
      **/
-	private static $db = [
-		'Description' => 'Varchar(256)',
-		'Ip' 	      => 'Varchar(256)',
-		'IpMin'	      => 'Varchar(256)',
-		'IpMax'       => 'Varchar(256)',
-		'Host' 	      => 'Varchar(256)',
-		'Referer'     => 'Varchar(256)'
-	];
+    private static $db = [
+        'Description' => 'Varchar(256)',
+        'Ip'          => 'Varchar(256)',
+        'IpMin'       => 'Varchar(256)',
+        'IpMax'       => 'Varchar(256)',
+        'Host'        => 'Varchar(256)',
+        'Referer'     => 'Varchar(256)'
+    ];
 
     /**
      * Fields in the Grid field
@@ -33,13 +33,13 @@ class BlockedUser extends DataObject
      *
      * @config array $summary_fields
      **/
-	private static $summary_fields = [
-		'Created'     => 'Created',
-		'Description' => 'Description',
-		'Ip' 	      => 'IP',
-		'Host'		  => 'Host',
-		'Referer'     => 'Referer'
-  	];
+    private static $summary_fields = [
+        'Created'     => 'Created',
+        'Description' => 'Description',
+        'Ip'          => 'IP',
+        'Host'        => 'Host',
+        'Referer'     => 'Referer'
+      ];
 
     /**
      * Model CMS grid sorting
@@ -68,32 +68,32 @@ class BlockedUser extends DataObject
      **/
     private static $plural_name = 'Blocked Users';
 
-	/**
-	 * Create the CMS fields where we can enter any blocked data
-	 *
+    /**
+     * Create the CMS fields where we can enter any blocked data
+     *
      * @since version 1.0.0
-	 * 
-	 * @return object
-	 **/
-	public function getCMSFields()
-	{
-		$fields = parent::getCMSFields();
+     * 
+     * @return object
+     **/
+    public function getCMSFields()
+    {
+        $fields = parent::getCMSFields();
 
-		$fields->addFieldToTab('Root.Main', HeaderField::create('Blocked User'));
-		$fields->addFieldToTab('Root.Main', ReadonlyField::create('Created'));
-		$fields->addFieldToTab('Root.Main', TextareaField::create('Description'));
+        $fields->addFieldToTab('Root.Main', HeaderField::create('Blocked User'));
+        $fields->addFieldToTab('Root.Main', ReadonlyField::create('Created'));
+        $fields->addFieldToTab('Root.Main', TextareaField::create('Description'));
 
-		$fields->addFieldToTab('Root.Main', HeaderField::create('IP Data')->setHeadingLevel(3));
-		$fields->addFieldToTab('Root.Main', TextField::create('Ip', 'IP Address'));
-		$fields->addFieldToTab('Root.Main', TextField::create('IpMin', 'Min IP range'));
-		$fields->addFieldToTab('Root.Main', TextField::create('IpMax', 'Max IP range'));
+        $fields->addFieldToTab('Root.Main', HeaderField::create('IP Data')->setHeadingLevel(3));
+        $fields->addFieldToTab('Root.Main', TextField::create('Ip', 'IP Address'));
+        $fields->addFieldToTab('Root.Main', TextField::create('IpMin', 'Min IP range'));
+        $fields->addFieldToTab('Root.Main', TextField::create('IpMax', 'Max IP range'));
 
-		$fields->addFieldToTab('Root.Main', HeaderField::create('Host Data')->setHeadingLevel(3));
-		$fields->addFieldToTab('Root.Main', TextField::create('Host', 'Hostname'));
+        $fields->addFieldToTab('Root.Main', HeaderField::create('Host Data')->setHeadingLevel(3));
+        $fields->addFieldToTab('Root.Main', TextField::create('Host', 'Hostname'));
 
-		$fields->addFieldToTab('Root.Main', HeaderField::create('Referer Data')->setHeadingLevel(3));
-		$fields->addFieldToTab('Root.Main', TextField::create('Referer', 'Referer URL'));
+        $fields->addFieldToTab('Root.Main', HeaderField::create('Referer Data')->setHeadingLevel(3));
+        $fields->addFieldToTab('Root.Main', TextField::create('Referer', 'Referer URL'));
 
-		return $fields;
-	}
+        return $fields;
+    }
 }
