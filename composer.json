@@ -22,5 +22,11 @@
     "extra": {
         "installer-name": "blacklist"
     },
+    "require": {
+        "php": ">=5.4.0",
+        "composer/installers": "*",
+        "silverstripe/cms": ">=3.0.1",
+        "silverstripe/framework": ">=3.0.1"
+    },
     "prefer-stable": true
 }
