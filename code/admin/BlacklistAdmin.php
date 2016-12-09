@@ -81,4 +81,26 @@ class BlacklistAdmin extends ModelAdmin
      * @config bool $showImportForm
      **/
 	public $showImportForm = false;
+
+    /**
+     * CMS grid field and edit form config
+     * 
+     * @since version 1.0.0
+     *
+     * @param mixed $id
+     * @param mixed $fields
+     *
+     * @return object
+     **/
+    public function getEditForm($id = null, $fields = null)
+    {
+        $form = parent::getEditForm($id, $fields);
+
+        $grid = $form->Fields()->fieldByName($this->sanitiseClassName($this->modelClass));
+        
+        if($this->modelClass == 'LoggedUser') {
+            $grid->getConfig()->removeComponentsByType('GridFieldAddNewButton');
+        }
+        return $form;
+    }
 }
